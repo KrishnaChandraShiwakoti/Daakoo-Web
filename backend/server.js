@@ -3,6 +3,16 @@ const mongoConnect = require("./config/db");
 require("dotenv").config({ path: ".env.dev" });
 const PORT = process.env.PORT || 3000;
 
+// Process-level error logging
+process.on("unhandledRejection", (reason) => {
+  console.error("Unhandled Rejection:", reason);
+});
+
+process.on("uncaughtException", (error) => {
+  console.error("Uncaught Exception:", error);
+  process.exit(1);
+});
+
 mongoConnect()
   .then(() => {
     app.listen(PORT, (error) =>
