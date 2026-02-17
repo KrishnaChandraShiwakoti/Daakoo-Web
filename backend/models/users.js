@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const userModel = new mongoose.Schema({
-  fname: {
+  fName: {
     type: String,
     required: true,
   },
@@ -17,6 +17,15 @@ const userModel = new mongoose.Schema({
   password: {
     type: String,
     required: true,
+  },
+  role: {
+    type: String,
+    enum: ["user", "staff", "admin"],
+    default: "user",
+  },
+  contact: {
+    type: String,
+    require: true,
   },
   refreshJWT: {
     type: String,

@@ -2,11 +2,13 @@ const express = require("express");
 const morgan = require("morgan");
 const app = express();
 
+const userRouter = require("./routes/userRoutes.js");
 // Middleware
 app.use(express.json());
 app.use(morgan("combined"));
 
 //routes
+app.use("/api/v1/user", userRouter);
 
 //health check
 app.get("/health", (req, res) => {
