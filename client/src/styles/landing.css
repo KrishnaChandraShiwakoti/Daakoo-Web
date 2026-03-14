@@ -1,0 +1,49 @@
+.hero {
+  background-color: #0a0a0a;
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+}
+.hero .left {
+  width: 50%;
+}
+.hero .left .title {
+  background-color: #2a1f0e;
+  width: fit-content;
+  padding: 5px 10px;
+  color: #e8a020;
+  font-weight: bold;
+  border-radius: 20px;
+}
+.hero .left h1 {
+  font-size: 60px;
+  color: white;
+  width: 50%;
+  margin: 5px 0px;
+}
+.hero .left h1 span {
+  color: #e8a020;
+}
+.hero .left .description {
+  color: #8c8984;
+  width: 70%;
+  line-height: 1.5;
+}
+.buttons-container {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0px;
+}
+
+.hero .right {
+  height: 400px;
+  width: 450px;
+  background-color: aliceblue;
+  border-radius: 30px;
+  padding: 8px;
+}
+.hero .right img {
+  height: 100%;
+  width: 100%;
+  border-radius: 20px;
+}

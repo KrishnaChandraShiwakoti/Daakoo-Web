@@ -1,0 +1,51 @@
+nav {
+  display: flex;
+  box-shadow: 1px 1px 13px;
+  background-color: #0a0a0a;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #2c2c2c;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+.nav-links a {
+  position: relative;
+  text-decoration: none;
+  color: aliceblue;
+}
+.nav-links a:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom center;
+}
+.nav-links a:hover {
+  cursor: pointer;
+  color: #e8a020;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: -3px;
+  left: 0;
+  background-color: #e8a020;
+  transition: transform 0.15s ease-out;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-right: 10px;
+  color: aliceblue;
+}
+
+.active {
+  color: #e8a020;
+}

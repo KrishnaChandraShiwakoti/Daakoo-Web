@@ -1,0 +1,15 @@
+.hollowed-cta {
+  background: transparent;
+  border: 1.5px solid rgba(255, 255, 255, 0.18);
+  padding: 13px 28px;
+  color: #e8a020;
+  font-size: 15px;
+  border-radius: 9px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.hollowed-cta:hover {
+  border-color: #e8a020;
+  cursor: pointer;
+}

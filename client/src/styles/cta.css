@@ -1,0 +1,14 @@
+.cta {
+  font-size: 15px;
+  padding: 13px 30px;
+  background-color: #e8a020;
+  color: black;
+  border: none;
+  border-radius: 9px;
+  font-weight: 700;
+}
+.cta:hover {
+  cursor: pointer;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(232, 160, 32, 0.4);
+}
