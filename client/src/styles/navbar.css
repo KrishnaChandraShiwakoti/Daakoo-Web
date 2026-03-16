@@ -38,6 +38,10 @@ nav {
   transition: transform 0.15s ease-out;
 }
 
+.nav-links a.active::after {
+  transform: scaleX(1);
+}
+
 .nav-right {
   display: flex;
   align-items: center;
@@ -47,5 +51,5 @@ nav {
 }
 
 .active {
-  color: #e8a020;
+  color: #e8a020 !important;
 }

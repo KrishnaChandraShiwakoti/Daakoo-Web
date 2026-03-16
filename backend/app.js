@@ -3,12 +3,15 @@ const morgan = require("morgan");
 const app = express();
 
 const userRouter = require("./routes/userRoutes.js");
+const menuRouter = require("./routes/menuRoutes.js");
+
 // Middleware
 app.use(express.json());
 app.use(morgan("combined"));
 
 //routes
 app.use("/api/v1/user", userRouter);
+app.use("/api/v1/menu", menuRouter);
 
 //health check
 app.get("/health", (req, res) => {

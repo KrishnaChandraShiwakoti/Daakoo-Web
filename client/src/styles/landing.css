@@ -47,3 +47,155 @@
   width: 100%;
   border-radius: 20px;
 }
+
+.why-section {
+  padding: 80px 20px;
+  background-color: #0a0a0a;
+}
+
+.why-container {
+  background: #1b1b1b;
+  width: 85%;
+  margin: 10px auto;
+  border-radius: 48px;
+  padding: 50px 60px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #2e2e2e;
+}
+
+.bg-circle {
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  filter: blur(80px);
+}
+
+.circle-top {
+  top: -40px;
+  right: -40px;
+  background: rgba(255, 153, 0, 0.25);
+}
+
+.circle-bottom {
+  bottom: -40px;
+  left: -40px;
+  background: rgba(255, 85, 85, 0.25);
+}
+
+.why-content {
+  display: flex;
+  width: 40%;
+  gap: 60px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.why-text {
+  flex: 1;
+  min-width: 280px;
+}
+
+.why-text h2 {
+  font-size: 50px;
+  width: 60%;
+  font-weight: 800;
+  margin-bottom: 20px;
+  color: white;
+}
+
+.why-text h2 span {
+  color: #e8a020;
+}
+
+.why-text p {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #cfcfcf;
+  margin-bottom: 30px;
+}
+
+.features {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.feature {
+  display: flex;
+  gap: 16px;
+}
+
+.icon-box {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 153, 0, 0.2);
+  border-radius: 12px;
+  color: #ff9900;
+}
+.material-symbols-outlined img {
+  height: 30px;
+  width: 30px;
+}
+
+.feature h4 {
+  font-size: 18px;
+  margin: 4px;
+  color: white;
+}
+
+.feature p {
+  font-size: 14px;
+  color: #a5a5a5;
+}
+
+.image-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  position: absolute;
+  right: 3%;
+  top: 20%;
+}
+
+.img-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.offset {
+  padding-top: 40px;
+}
+
+.img {
+  background-size: cover;
+  background-position: center;
+  border-radius: 20px;
+  border: 4px solid white;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+}
+
+.img.large {
+  height: 240px;
+}
+
+.img.small {
+  height: 180px;
+  max-width: 400px;
+}
+
+@media (max-width: 900px) {
+  .why-content {
+    flex-direction: column;
+  }
+
+  .why-container {
+    padding: 40px;
+  }
+}

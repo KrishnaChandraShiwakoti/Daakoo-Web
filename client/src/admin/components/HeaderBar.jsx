@@ -8,10 +8,8 @@ const HeaderBar = () => {
   // Extract the page name from the URL path
   const getPageName = () => {
     const pathname = location.pathname;
-    console.log("pathname" + pathname);
 
     const segments = pathname.split("/").filter(Boolean);
-    console.log("segments" + segments);
     // Get the last segment (e.g., 'dashboard', 'orders', 'menu', 'management')
     const currentPage = segments[segments.length - 1];
 

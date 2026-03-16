@@ -1,0 +1,224 @@
+/* ── PAGE LAYOUT ──────────────────────────────  */
+.page {
+  margin-left: 240px;
+  padding: 28px 32px;
+  min-height: 100vh;
+  background: var(--bg, #f4f5f7);
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.page-title-lg {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-primary, #111);
+}
+
+.page-sub {
+  font-size: 13px;
+  color: var(--text-secondary, #6b7280);
+  margin-top: 2px;
+}
+
+/* ── BUTTONS ─────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.btn:hover {
+  opacity: 0.85;
+}
+
+.btn-primary {
+  background: var(--red, #c0392b);
+  color: #fff;
+  border: none;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary, #6b7280);
+  border: 1px solid var(--border, #e5e7eb);
+}
+
+.btn-sm {
+  padding: 5px 10px;
+  font-size: 12px;
+}
+
+.btn-icon {
+  padding: 5px 8px;
+}
+
+.btn-delete {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border: none;
+}
+
+/* ── FILTER BAR ──────────────────────────────── */
+.filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.filter-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  border: 1px solid var(--border, #e5e7eb);
+  border-radius: 6px;
+  padding: 7px 12px;
+  flex: 1;
+  min-width: 180px;
+  max-width: 280px;
+}
+
+.filter-search input {
+  border: none;
+  outline: none;
+  font-size: 13px;
+  background: transparent;
+  width: 100%;
+  color: var(--text-primary, #111);
+}
+
+.tag-filters {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.tag-filter {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  background: #fff;
+  border: 1px solid var(--border, #e5e7eb);
+  color: var(--text-secondary, #6b7280);
+  transition: all 0.15s;
+}
+
+.tag-filter:hover {
+  border-color: var(--red, #c0392b);
+  color: var(--red, #c0392b);
+}
+
+.tag-filter.active {
+  background: var(--red, #c0392b);
+  color: #fff;
+  border-color: var(--red, #c0392b);
+}
+/* ── MENU GRID ─────────────────────────────────  */
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.dish-card {
+  background: #fff;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: box-shadow 0.15s;
+}
+
+.dish-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.dish-img {
+  height: 140px;
+  background: linear-gradient(135deg, #f0ece6, #e8e0d5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 42px;
+  position: relative;
+}
+
+.dish-indicators {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  display: flex;
+  gap: 4px;
+}
+
+.indicator {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.ind-veg {
+  background: #16a34a;
+  color: #fff;
+}
+.ind-nonveg {
+  background: var(--red);
+  color: #fff;
+}
+.ind-spicy {
+  background: var(--saffron);
+  color: #fff;
+}
+
+.dish-body {
+  padding: 14px;
+}
+.dish-name {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+.dish-cat {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+}
+
+.dish-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dish-price {
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  color: var(--red);
+  font-size: 15px;
+}
+
+.dish-actions {
+  display: flex;
+  gap: 6px;
+}

@@ -1,7 +1,7 @@
 import React from "react";
 
-const Dashboarrd = () => {
+const Reviews = () => {
   return <div></div>;
 };
 
-export default Dashboarrd;
+export default Reviews;

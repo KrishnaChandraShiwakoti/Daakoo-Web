@@ -3,6 +3,7 @@ import "../../styles/landing.css";
 import heroImage from "../../assets/hero-image.png";
 import CTA from "../../components/CTA";
 import HollowedCTA from "../../components/HollowedCTA";
+import WhySection from "../../components/Layout/WhySection";
 const LandingPage = () => {
   return (
     <>
@@ -28,6 +29,8 @@ const LandingPage = () => {
           <img src={heroImage} alt="" />
         </div>
       </div>
+      {/* Why us */}
+      <WhySection />
     </>
   );
 };

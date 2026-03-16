@@ -1,6 +1,6 @@
 const { default: mongoose } = require("mongoose");
 
-const ItemsModel = new mongoose.Schema({
+const MenuModel = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -13,15 +13,18 @@ const ItemsModel = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  spiceLevel: {
-    type: Number,
-    min: 1,
-    max: 5,
+  isSpicy: {
+    type: Boolean,
+    required: true,
+  },
+  isVegetarian: {
+    type: Boolean,
+    required: true,
   },
   images: [{ type: mongoose.Schema.ObjectId, ref: "Images" }],
   category: [{ type: mongoose.Schema.ObjectId, ref: "Category" }],
 });
 
-const Items = mongoose.model("Items", ItemsModel);
+const Menu = mongoose.model("Menu", MenuModel);
 
-module.exports = Items;
+module.exports = Menu;
