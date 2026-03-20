@@ -94,6 +94,7 @@ aside {
   background: var(--red);
   color: #fff;
   border-radius: 5px;
+  width: 90%;
 }
 .nav-item.active .nav-icon {
   opacity: 1;

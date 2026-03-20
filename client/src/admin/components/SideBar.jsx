@@ -72,10 +72,11 @@ const SideBar = () => {
             </svg>
             Menu Management
           </NavLink>
-          <button
-            type="button"
-            className={getPlaceholderClassName("categories")}
-            onClick={() => setSelectedItem("categories")}>
+          <NavLink
+            className={({ isActive }) =>
+              isActive ? "nav-item active" : "nav-item"
+            }
+            to="/admin/categories">
             <svg
               className="nav-icon"
               viewBox="0 0 24 24"
@@ -84,11 +85,12 @@ const SideBar = () => {
               <path d="M3 7h18M3 12h18M3 17h18" />
             </svg>
             Categories
-          </button>
-          <button
-            type="button"
-            className={getPlaceholderClassName("customers")}
-            onClick={() => setSelectedItem("customers")}>
+          </NavLink>
+          <NavLink
+            className={({ isActive }) =>
+              isActive ? "nav-item active" : "nav-item"
+            }
+            to="/admin/customers">
             <svg
               className="nav-icon"
               viewBox="0 0 24 24"
@@ -100,12 +102,13 @@ const SideBar = () => {
               <path d="M16 3.13a4 4 0 010 7.75" />
             </svg>
             Customers
-          </button>
+          </NavLink>
           <div className="nav-section-label">Insights</div>
-          <button
-            type="button"
-            className={getPlaceholderClassName("analytics")}
-            onClick={() => setSelectedItem("analytics")}>
+          <NavLink
+            className={({ isActive }) =>
+              isActive ? "nav-item active" : "nav-item"
+            }
+            to="/admin/analytics">
             <svg
               className="nav-icon"
               viewBox="0 0 24 24"
@@ -114,11 +117,12 @@ const SideBar = () => {
               <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
             </svg>
             Analytics
-          </button>
-          <button
-            type="button"
-            className={getPlaceholderClassName("reviews")}
-            onClick={() => setSelectedItem("reviews")}>
+          </NavLink>
+          <NavLink
+            className={({ isActive }) =>
+              isActive ? "nav-item active" : "nav-item"
+            }
+            to="/admin/reviews">
             <svg
               className="nav-icon"
               viewBox="0 0 24 24"
@@ -127,11 +131,13 @@ const SideBar = () => {
               <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
             </svg>
             Reviews
-          </button>
+          </NavLink>
           <div className="nav-section-label">System</div>
-          <button
-            type="button"
-            className={getPlaceholderClassName("settings")}
+          <NavLink
+            className={({ isActive }) =>
+              isActive ? "nav-item active" : "nav-item"
+            }
+            to="/admin/settings"
             onClick={() => setSelectedItem("settings")}>
             <svg
               className="nav-icon"
@@ -142,7 +148,7 @@ const SideBar = () => {
               <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z" />
             </svg>
             Settings
-          </button>
+          </NavLink>
           <button
             type="button"
             className={getPlaceholderClassName("logout")}

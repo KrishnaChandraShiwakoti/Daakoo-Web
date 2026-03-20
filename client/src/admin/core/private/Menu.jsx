@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../styles/menu.css";
 import NewDish from "../../components/NewDish";
+import { deleteDish, getAllDishes, updateDish } from "../../../API/Menu";
 
 const CATEGORIES = [
   "All",
@@ -12,74 +13,33 @@ const CATEGORIES = [
   "Drinks",
 ];
 
-const DISHES = [
-  {
-    id: 1,
-    emoji: "🍖",
-    name: "Lamb Rogan Josh",
-    cat: "Mains · Lamb",
-    price: "£16.00",
-    veg: false,
-    spicy: true,
-  },
-  {
-    id: 2,
-    emoji: "🍗",
-    name: "Chicken Tikka Masala",
-    cat: "Mains · Chicken",
-    price: "£14.50",
-    veg: false,
-    spicy: false,
-  },
-  {
-    id: 3,
-    emoji: "🧆",
-    name: "Paneer Tikka",
-    cat: "Starters · Vegetarian",
-    price: "£11.00",
-    veg: true,
-    spicy: false,
-  },
-  {
-    id: 4,
-    emoji: "🍲",
-    name: "Dal Makhani",
-    cat: "Mains · Lentils",
-    price: "£12.00",
-    veg: true,
-    spicy: false,
-  },
-  {
-    id: 5,
-    emoji: "🫓",
-    name: "Garlic Naan",
-    cat: "Breads",
-    price: "£2.50",
-    veg: true,
-    spicy: false,
-  },
-  {
-    id: 6,
-    emoji: "🍤",
-    name: "Prawn Biryani",
-    cat: "Rice · Seafood",
-    price: "£17.50",
-    veg: false,
-    spicy: true,
-  },
-];
-
 const Menu = () => {
   const [activeCategory, setActiveCategory] = useState("All");
   const [search, setSearch] = useState("");
   const [isAddDishModalOpen, setIsAddDishModalOpen] = useState(false);
+  const [Dishes, setDishes] = useState([]);
 
+  useEffect(() => {
+    const getDishes = async () => {
+      const dish = await getAllDishes();
+      setDishes(dish);
+    };
+    getDishes();
+  }, []);
+  const handleDelete = async (id) => {
+    await deleteDish(id);
+    setDishes(Dishes.filter((dish) => dish.id !== id));
+  };
+  const handleUpdate = async (id, data) => {
+    await updateDish(id, data);
+    setDishes(Dishes.map((dish) => (dish.id === id ? data : dish)));
+  };
   return (
     <div className="page" id="page-menu">
       <div className="page-header">
         <div>
           <div className="page-title-lg">Menu Management</div>
-          <div className="page-sub">48 active dishes across 9 categories</div>
+          <div className="page-sub">48 active Dishes across 9 categories</div>
         </div>
         <button
           className="btn btn-primary"
@@ -112,7 +72,7 @@ const Menu = () => {
           </svg>
           <input
             type="text"
-            placeholder="Search dishes…"
+            placeholder="Search Dishes…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -130,26 +90,30 @@ const Menu = () => {
       </div>
 
       <div className="menu-grid">
-        {DISHES.map((dish) => (
+        {Dishes.map((dish) => (
           <div className="dish-card" key={dish.id}>
             <div className="dish-img">
-              {dish.emoji}
+              <img src={`http://localhost:3000${dish.images}`} />
               <div className="dish-indicators">
                 <div
                   className={`indicator ${dish.veg ? "ind-veg" : "ind-nonveg"}`}>
                   {dish.veg ? "V" : "N"}
                 </div>
-                {dish.spicy && <div className="indicator ind-spicy">🌶</div>}
+                {dish.isSpicy && <div className="indicator ind-spicy">🌶</div>}
               </div>
             </div>
             <div className="dish-body">
               <div className="dish-name">{dish.name}</div>
-              <div className="dish-cat">{dish.cat}</div>
+              <div className="dish-cat">{dish.category}</div>
               <div className="dish-footer">
-                <span className="dish-price">{dish.price}</span>
+                <span className="dish-price">£{dish.price}</span>
                 <div className="dish-actions">
                   <button className="btn btn-ghost btn-sm btn-icon">✏️</button>
-                  <button className="btn btn-sm btn-delete">🗑</button>
+                  <button
+                    className="btn btn-sm btn-delete"
+                    onClick={() => handleDelete(dish.id)}>
+                    🗑
+                  </button>
                 </div>
               </div>
             </div>

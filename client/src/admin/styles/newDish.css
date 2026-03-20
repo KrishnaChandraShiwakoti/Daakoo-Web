@@ -296,3 +296,23 @@
 .toggle input:checked + .toggle-slider::before {
   transform: translateX(18px);
 }
+
+.error {
+  text-transform: capitalize;
+  color: red;
+}
+
+.image-preview {
+  border-radius: 6px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.image-preview img {
+  max-height: 100%;
+  max-width: 100%;
+  border-radius: 4px;
+}

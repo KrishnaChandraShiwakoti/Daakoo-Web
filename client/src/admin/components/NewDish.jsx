@@ -1,10 +1,45 @@
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import "../styles/newDish.css";
+import { menu } from "../../utils/axios";
+import { createDish } from "../../API/Menu";
 const NewDish = ({ isOpen, onClose }) => {
-  console.log("is open");
-
+  const [imagePreview, setImagePreview] = useState(null);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   if (!isOpen) {
     return null;
   }
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImagePreview(URL.createObjectURL(file));
+    }
+  };
+
+  const formSubmit = async (data) => {
+    const formData = new FormData();
+    formData.append("DishName", data.DishName);
+    formData.append("description", data.description);
+    formData.append("price", data.price);
+    formData.append("category", data.category);
+    formData.append("isSpicy", String(!!data.isSpicy));
+    formData.append("isVegetarian", String(!!data.isVegetarian));
+    formData.append("image", data.image[0]);
+
+    try {
+      const res = await createDish(formData);
+      if (res.status == 201) {
+        onClose();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div
@@ -18,13 +53,25 @@ const NewDish = ({ isOpen, onClose }) => {
             ✕
           </button>
         </div>
-        <div className="modal-body">
+        <form className="modal-body" onSubmit={handleSubmit(formSubmit)}>
           <div style={{ marginBottom: "20px" }}>
             <div className="upload-area">
-              <div className="upload-icon">📷</div>
+              <div className="image-preview">
+                {imagePreview ? (
+                  <img src={imagePreview} alt="Selected" />
+                ) : (
+                  <div className="placeholder">
+                    <div className="upload-icon">📷</div>
+                    <p>No image selected</p>
+                  </div>
+                )}
+              </div>
               <div className="upload-text">
-                <input type="file" />
-                {/* Drop image here or <span>browse files</span> */}
+                <input
+                  type="file"
+                  {...register("image", { required: "image is required" })}
+                  onChange={handleImageChange}
+                />
               </div>
               <div
                 style={{
@@ -36,6 +83,8 @@ const NewDish = ({ isOpen, onClose }) => {
               </div>
             </div>
           </div>
+          {errors.image && <p className="error">{errors.image.message}</p>}
+
           <div className="form-grid">
             <div className="form-group form-full">
               <label className="form-label">Dish Name *</label>
@@ -43,22 +92,41 @@ const NewDish = ({ isOpen, onClose }) => {
                 className="form-input"
                 type="text"
                 placeholder="e.g. Lamb Rogan Josh"
+                {...register("DishName", {
+                  required: "Dish Name is required ",
+                })}
               />
+              {errors.DishName && <p>{errors.DishName.message}</p>}
             </div>
             <div className="form-group form-full">
               <label className="form-label">Description</label>
               <textarea
                 className="form-textarea"
                 placeholder="Describe the dish, key ingredients, cooking style..."
+                {...register("description", {
+                  required: "Description is required ",
+                })}
               />
             </div>
             <div className="form-group">
               <label className="form-label">Price (£) *</label>
-              <input className="form-input" type="number" placeholder="0.00" />
+              <input
+                className="form-input"
+                type="number"
+                placeholder="0.00"
+                {...register("price", {
+                  required: "price is required ",
+                })}
+              />
             </div>
             <div className="form-group">
               <label className="form-label">Category *</label>
-              <select className="form-input" defaultValue="">
+              <select
+                className="form-input"
+                defaultValue=""
+                {...register("category", {
+                  required: "Category is required ",
+                })}>
                 <option value="">Select category...</option>
                 <option>Starters</option>
                 <option>Mains</option>
@@ -82,27 +150,29 @@ const NewDish = ({ isOpen, onClose }) => {
                 <div className="toggle-row">
                   <span className="toggle-label">Vegetarian</span>
                   <label className="toggle">
-                    <input type="checkbox" />
+                    <input type="checkbox" {...register("isVegetarian")} />
                     <span className="toggle-slider"></span>
                   </label>
                 </div>
                 <div className="toggle-row">
                   <span className="toggle-label">Spicy</span>
                   <label className="toggle">
-                    <input type="checkbox" />
+                    <input type="checkbox" {...register("isSpicy")} />
                     <span className="toggle-slider"></span>
                   </label>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="modal-footer">
-          <button className="btn btn-secondary" onClick={onClose}>
-            Cancel
-          </button>
-          <button className="btn btn-primary">Save Dish</button>
-        </div>
+          <div className="modal-footer">
+            <button className="btn btn-secondary" onClick={onClose}>
+              Cancel
+            </button>
+            <button className="btn btn-primary" type="submit">
+              Save Dish
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );

@@ -1,0 +1,41 @@
+/* ── FILTERS ─────────────────────────────────── */
+.filter-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 18px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.filter-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 14px;
+  flex: 1;
+  max-width: 320px;
+}
+
+.filter-search input {
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  font-family: "DM Sans", sans-serif;
+  width: 100%;
+  outline: none;
+}
+
+.filter-select {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-family: "DM Sans", sans-serif;
+  color: var(--text-primary);
+  outline: none;
+  cursor: pointer;
+}
