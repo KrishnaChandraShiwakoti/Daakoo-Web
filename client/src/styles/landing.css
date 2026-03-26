@@ -55,7 +55,7 @@
 
 .why-container {
   background: #1b1b1b;
-  width: 85%;
+  width: 70%;
   margin: 10px auto;
   border-radius: 48px;
   padding: 50px 60px;
@@ -86,7 +86,7 @@
 
 .why-content {
   display: flex;
-  width: 40%;
+  width: 48%;
   gap: 60px;
   align-items: center;
   flex-wrap: wrap;
@@ -159,8 +159,9 @@
   grid-template-columns: 1fr 1fr;
   gap: 16px;
   position: absolute;
-  right: 3%;
-  top: 20%;
+  right: 1%;
+  top: 15%;
+  width: 50%;
 }
 
 .img-col {
@@ -186,8 +187,8 @@
 }
 
 .img.small {
-  height: 180px;
-  max-width: 400px;
+  height: 200px;
+  max-width: 300px;
 }
 
 @media (max-width: 900px) {

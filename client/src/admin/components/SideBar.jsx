@@ -1,9 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import "../styles/sideBar.css";
+import { useOrders } from "../../hooks/useOrders";
 
 const SideBar = () => {
   const [selectedItem, setSelectedItem] = useState("");
+  const [activeCount, setActiveCount] = useState(0);
+  const { getActiveOrdersCount } = useOrders();
+
+  useEffect(() => {
+    getActiveOrdersCount().then((count) => setActiveCount(count));
+  });
 
   const getPlaceholderClassName = (key) =>
     selectedItem === key ? "nav-item active" : "nav-item";
@@ -54,7 +61,7 @@ const SideBar = () => {
               <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
             </svg>
             Orders
-            <span className="nav-badge">0</span>
+            <span className="nav-badge">{activeCount}</span>
           </NavLink>
           <NavLink
             className={({ isActive }) =>

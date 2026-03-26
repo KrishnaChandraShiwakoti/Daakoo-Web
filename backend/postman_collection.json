@@ -1,0 +1,310 @@
+{
+  "info": {
+    "name": "Daako Admin Panel API - Full Test Suite",
+    "description": "Complete test collection for all admin panel API endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Categories",
+      "item": [
+        {
+          "name": "Get All Categories",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/categories"
+          }
+        },
+        {
+          "name": "Create Category",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:3000/api/v1/categories",
+            "body": {
+              "raw": "{\n  \"name\": \"Appetizers\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Category",
+          "request": {
+            "method": "PUT",
+            "url": "http://localhost:3000/api/v1/categories/:id",
+            "body": {
+              "raw": "{\n  \"name\": \"Starters & Appetizers\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Category",
+          "request": {
+            "method": "DELETE",
+            "url": "http://localhost:3000/api/v1/categories/:id"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Orders",
+      "item": [
+        {
+          "name": "Create Order",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:3000/api/v1/orders",
+            "body": {
+              "raw": "{\n  \"userId\": \"USER_ID_HERE\",\n  \"items\": [\n    {\n      \"menuId\": \"MENU_ID_HERE\",\n      \"quantity\": 2,\n      \"price\": 12.99,\n      \"name\": \"Chicken Tikka\"\n    }\n  ],\n  \"totalAmount\": 25.98,\n  \"type\": \"delivery\",\n  \"deliveryAddress\": \"123 Main Street\",\n  \"notes\": \"No onions please\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get All Orders",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/orders?status=pending&type=delivery&page=1&limit=10"
+          }
+        },
+        {
+          "name": "Get Order By ID",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/orders/:id"
+          }
+        },
+        {
+          "name": "Update Order Status",
+          "request": {
+            "method": "PUT",
+            "url": "http://localhost:3000/api/v1/orders/:id/status",
+            "body": {
+              "raw": "{\n  \"status\": \"preparing\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Search Orders",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/orders/search?query=customer_name"
+          }
+        },
+        {
+          "name": "Get Active Orders Count",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/orders/active-count"
+          }
+        },
+        {
+          "name": "Get Recent Orders",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/orders/recent?limit=5"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Analytics",
+      "item": [
+        {
+          "name": "Get Today KPI",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/analytics/today-kpi"
+          }
+        },
+        {
+          "name": "Get Revenue by Period",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/analytics/revenue?period=week"
+          }
+        },
+        {
+          "name": "Get Popular Dishes",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/analytics/popular-dishes?limit=5"
+          }
+        },
+        {
+          "name": "Get Order Status Breakdown",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/analytics/order-status"
+          }
+        },
+        {
+          "name": "Get Monthly Stats",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/analytics/monthly-stats"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reviews",
+      "item": [
+        {
+          "name": "Create Review",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:3000/api/v1/reviews",
+            "body": {
+              "raw": "{\n  \"userId\": \"USER_ID_HERE\",\n  \"dishId\": \"MENU_ID_HERE\",\n  \"rating\": 4,\n  \"comment\": \"Very delicious and well-cooked!\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get All Reviews",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/reviews?isApproved=false&page=1&limit=10"
+          }
+        },
+        {
+          "name": "Get Review Stats",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/reviews/stats"
+          }
+        },
+        {
+          "name": "Approve Review",
+          "request": {
+            "method": "PUT",
+            "url": "http://localhost:3000/api/v1/reviews/:id/approve"
+          }
+        },
+        {
+          "name": "Reject Review",
+          "request": {
+            "method": "DELETE",
+            "url": "http://localhost:3000/api/v1/reviews/:id/reject"
+          }
+        },
+        {
+          "name": "Delete Review",
+          "request": {
+            "method": "DELETE",
+            "url": "http://localhost:3000/api/v1/reviews/:id"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Customers",
+      "item": [
+        {
+          "name": "Get All Customers",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/customers?page=1&limit=10"
+          }
+        },
+        {
+          "name": "Create/Update Customer",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:3000/api/v1/customers",
+            "body": {
+              "raw": "{\n  \"userId\": \"USER_ID_HERE\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john@example.com\",\n  \"phone\": \"+1234567890\",\n  \"address\": \"123 Main Street\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Customer By ID",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/customers/:id"
+          }
+        },
+        {
+          "name": "Search Customers",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/customers/search?query=john"
+          }
+        },
+        {
+          "name": "Get Top Customers",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/customers/top?limit=10"
+          }
+        },
+        {
+          "name": "Get Customer Stats",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/customers/stats"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Settings",
+      "item": [
+        {
+          "name": "Get Settings",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/v1/settings"
+          }
+        },
+        {
+          "name": "Update Settings",
+          "request": {
+            "method": "PUT",
+            "url": "http://localhost:3000/api/v1/settings",
+            "body": {
+              "raw": "{\n  \"restaurantName\": \"Daako Indian Cuisine\",\n  \"address\": \"24 Commercial Street, London\",\n  \"phone\": \"+44 20 7123 4567\",\n  \"email\": \"info@daako.com\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Restaurant Info",
+          "request": {
+            "method": "PUT",
+            "url": "http://localhost:3000/api/v1/settings/restaurant-info",
+            "body": {
+              "raw": "{\n  \"name\": \"Daako Indian Cuisine\",\n  \"address\": \"24 Commercial Street, London\",\n  \"phone\": \"+44 20 7123 4567\",\n  \"email\": \"info@daako.com\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Operating Hours",
+          "request": {
+            "method": "PUT",
+            "url": "http://localhost:3000/api/v1/settings/operating-hours",
+            "body": {
+              "raw": "{\n  \"monday\": {\"enabled\": true, \"open\": \"09:00\", \"close\": \"22:00\"},\n  \"tuesday\": {\"enabled\": true, \"open\": \"09:00\", \"close\": \"22:00\"},\n  \"wednesday\": {\"enabled\": true, \"open\": \"09:00\", \"close\": \"22:00\"},\n  \"thursday\": {\"enabled\": true, \"open\": \"09:00\", \"close\": \"22:00\"},\n  \"friday\": {\"enabled\": true, \"open\": \"09:00\", \"close\": \"23:00\"},\n  \"saturday\": {\"enabled\": true, \"open\": \"09:00\", \"close\": \"23:00\"},\n  \"sunday\": {\"enabled\": false, \"open\": \"10:00\", \"close\": \"21:00\"}\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Order Settings",
+          "request": {
+            "method": "PUT",
+            "url": "http://localhost:3000/api/v1/settings/order-settings",
+            "body": {
+              "raw": "{\n  \"acceptDelivery\": true,\n  \"acceptPickup\": true,\n  \"onlineOrderingActive\": true,\n  \"deliveryRadius\": 5,\n  \"minOrderAmount\": 10\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Notifications",
+          "request": {
+            "method": "PUT",
+            "url": "http://localhost:3000/api/v1/settings/notifications",
+            "body": {
+              "raw": "{\n  \"newOrderAlert\": true,\n  \"orderStatusEmail\": true,\n  \"dailySummaryReport\": false\n}"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

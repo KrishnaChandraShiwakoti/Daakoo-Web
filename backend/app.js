@@ -20,6 +20,12 @@ app.use(
 
 const userRouter = require("./routes/userRoutes.js");
 const menuRouter = require("./routes/menuRoutes.js");
+const categoryRouter = require("./routes/categoryRoutes.js");
+const orderRouter = require("./routes/orderRoutes.js");
+const reviewRouter = require("./routes/reviewRoutes.js");
+const customerRouter = require("./routes/customerRoutes.js");
+const settingsRouter = require("./routes/settingsRoutes.js");
+const analyticsRouter = require("./routes/analyticsRoutes.js");
 
 // Middleware
 app.use(express.json());
@@ -30,6 +36,12 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 //routes
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/menu", menuRouter);
+app.use("/api/v1/categories", categoryRouter);
+app.use("/api/v1/orders", orderRouter);
+app.use("/api/v1/reviews", reviewRouter);
+app.use("/api/v1/customers", customerRouter);
+app.use("/api/v1/settings", settingsRouter);
+app.use("/api/v1/analytics", analyticsRouter);
 
 //health check
 app.get("/health", (req, res) => {
