@@ -1,5 +1,5 @@
 export { default as AdminDashboard } from "./Dashboarrd";
-export { default as AdminOrders } from "./orders";
+export { default as AdminOrders } from "./Orders";
 export { default as AdminMenu } from "./Menu";
 export { default as AdminCategories } from "./Categories";
 export { default as AdminCustomers } from "./Customers";
