@@ -1,9 +1,15 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import HomeLayout from "./core/public/HomeLayout";
+import {
+  HomeLayout,
+  Error,
+  LandingPage,
+  Menu,
+  About,
+  Contact,
+  Location,
+} from "./core";
 import AmdminHomeLayout from "./admin/core/private/HomeLayout";
-import Error from "./core/public/Error";
-import LandingPage from "./core/public/LandingPage";
-import Menu from "./core/public/Menu";
+
 import {
   AdminMenu,
   AdminDashboard,
@@ -29,6 +35,18 @@ function App() {
         {
           path: "/menu",
           element: <Menu />,
+        },
+        {
+          path: "/about",
+          element: <About />,
+        },
+        {
+          path: "/locations",
+          element: <Location />,
+        },
+        {
+          path: "/contact",
+          element: <Contact />,
         },
       ],
     },
