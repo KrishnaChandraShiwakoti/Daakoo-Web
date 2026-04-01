@@ -1,12 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap");
 
 .menu-page {
-  background: radial-gradient(
-    circle at 10% 8%,
-    #1b1b1b 0%,
-    #121212 52%,
-    #0a0a0a 100%
-  );
+  
   min-height: calc(100vh - 300px);
   padding: 22px 0 56px;
 }
@@ -24,7 +19,6 @@
   align-self: start;
   position: sticky;
   top: 92px;
-  left: 92px;
   background: rgba(27, 27, 27, 0.9);
   backdrop-filter: blur(6px);
   border: 1px solid #2e2e2e;

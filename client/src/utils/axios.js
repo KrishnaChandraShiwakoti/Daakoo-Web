@@ -27,3 +27,7 @@ export const settings = axios.create({
 export const dashboard = axios.create({
   baseURL: "http://localhost:3000/api/v1",
 });
+
+export const auth = axios.create({
+  baseURL: "http://localhost:3000/api/v1/user",
+});

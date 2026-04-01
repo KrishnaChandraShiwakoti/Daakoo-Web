@@ -39,20 +39,20 @@ async function seedUsers() {
     {
       fName: "Admin",
       lName: "User",
-      email: "admin@daakoo.com",
+      email: "admin@daako.com",
       password: await hashPassword("admin123"),
       role: "admin",
       contact: "020 7123 4567",
-      address: "123 Brick Lane, London E1 6SB",
+      addresses: ["123 Brick Lane, London E1 6SB"],
     },
     {
       fName: "Sheikh",
       lName: "Staff",
-      email: "staff@daakoo.com",
+      email: "staff@daako.com",
       password: await hashPassword("staff123"),
       role: "staff",
       contact: "020 7123 4568",
-      address: "123 Brick Lane, London E1 6SB",
+      addresses: ["123 Brick Lane, London E1 6SB"],
     },
     {
       fName: "John",
@@ -61,7 +61,7 @@ async function seedUsers() {
       password: await hashPassword("john123"),
       role: "user",
       contact: "077 1234 5678",
-      address: "10 Old Street, London EC1V 9BL",
+      addresses: ["10 Old Street, London EC1V 9BL"],
     },
     {
       fName: "Sarah",
@@ -70,7 +70,7 @@ async function seedUsers() {
       password: await hashPassword("sarah123"),
       role: "user",
       contact: "077 1234 5679",
-      address: "5 Shoreditch High Street, London E1 6PF",
+      addresses: ["5 Shoreditch High Street, London E1 6PF"],
     },
     {
       fName: "Ahmed",
@@ -79,7 +79,7 @@ async function seedUsers() {
       password: await hashPassword("ahmed123"),
       role: "user",
       contact: "077 1234 5680",
-      address: "15 Commercial Street, London E1 6LP",
+      addresses: ["15 Commercial Street, London E1 6LP"],
     },
     {
       fName: "Priya",
@@ -88,7 +88,7 @@ async function seedUsers() {
       password: await hashPassword("priya123"),
       role: "user",
       contact: "077 1234 5681",
-      address: "20 Aldgate High Street, London EC3N 1AQ",
+      addresses: ["20 Aldgate High Street, London EC3N 1AQ"],
     },
   ];
 
@@ -332,10 +332,8 @@ async function seedOrders(users, menuItems) {
       totalAmount: menuItems[4].price + menuItems[9].price * 2,
       status: "delivered",
       type: "delivery",
-      address: users[2].address,
+      deliveryAddress: users[2].addresses[0],
       notes: "Extra coriander please",
-      estimatedTime: new Date(now.getTime() + 30 * 60000),
-      actualTime: new Date(now.getTime() - 60 * 60000),
       createdAt: new Date(now.getTime() - 2 * 60 * 60000),
     },
     {
@@ -351,9 +349,8 @@ async function seedOrders(users, menuItems) {
       totalAmount: menuItems[14].price,
       status: "confirmed",
       type: "pickup",
-      address: "",
+      deliveryAddress: "",
       notes: "Not too spicy",
-      estimatedTime: new Date(now.getTime() + 60 * 60000),
       createdAt: new Date(now.getTime() - 10 * 60000),
     },
     {
@@ -375,9 +372,8 @@ async function seedOrders(users, menuItems) {
       totalAmount: menuItems[5].price * 2 + menuItems[10].price,
       status: "preparing",
       type: "delivery",
-      address: users[4].address,
+      deliveryAddress: users[4].addresses[0],
       notes: "",
-      estimatedTime: new Date(now.getTime() + 45 * 60000),
       createdAt: new Date(now.getTime() - 5 * 60000),
     },
     {
@@ -406,9 +402,8 @@ async function seedOrders(users, menuItems) {
         menuItems[6].price + menuItems[15].price + menuItems[18].price,
       status: "ready",
       type: "pickup",
-      address: "",
+      deliveryAddress: "",
       notes: "Ready after 5pm",
-      estimatedTime: new Date(now.getTime() + 120 * 60000),
       createdAt: new Date(now.getTime() - 15 * 60000),
     },
     {
@@ -430,9 +425,8 @@ async function seedOrders(users, menuItems) {
       totalAmount: menuItems[0].price * 2 + menuItems[1].price,
       status: "pending",
       type: "delivery",
-      address: users[2].address,
+      deliveryAddress: users[2].addresses[0],
       notes: "No chilli",
-      estimatedTime: new Date(now.getTime() + 35 * 60000),
       createdAt: new Date(),
     },
   ];
@@ -515,7 +509,7 @@ async function seedCustomers(users) {
       lastName: users[2].lName,
       email: users[2].email,
       phone: users[2].contact,
-      address: users[2].address,
+      address: users[2].addresses[0],
       totalOrders: 5,
       totalSpent: 65.5,
       lastOrderDate: new Date(),
@@ -527,7 +521,7 @@ async function seedCustomers(users) {
       lastName: users[3].lName,
       email: users[3].email,
       phone: users[3].contact,
-      address: users[3].address,
+      address: users[3].addresses[0],
       totalOrders: 12,
       totalSpent: 184.75,
       lastOrderDate: new Date(),
@@ -539,7 +533,7 @@ async function seedCustomers(users) {
       lastName: users[4].lName,
       email: users[4].email,
       phone: users[4].contact,
-      address: users[4].address,
+      address: users[4].addresses[0],
       totalOrders: 8,
       totalSpent: 125.0,
       lastOrderDate: new Date(),
@@ -551,7 +545,7 @@ async function seedCustomers(users) {
       lastName: users[5].lName,
       email: users[5].email,
       phone: users[5].contact,
-      address: users[5].address,
+      address: users[5].addresses[0],
       totalOrders: 3,
       totalSpent: 45.25,
       lastOrderDate: new Date(),
@@ -570,33 +564,30 @@ async function seedSettings() {
   await Settings.deleteMany({});
 
   const settings = {
-    restaurantInfo: {
-      restaurantName: "Daakoo London",
-      address: "123 Brick Lane, London E1 6SB",
-      phone: "020 7123 4567",
-      email: "info@daakoo.com",
-    },
+    restaurantName: "Daako London",
+    address: "123 Brick Lane, London E1 6SB",
+    phone: "020 7123 4567",
+    email: "info@daako.com",
     operatingHours: {
-      monday: { enabled: true, startTime: "12:00", endTime: "22:00" },
-      tuesday: { enabled: true, startTime: "12:00", endTime: "22:00" },
-      wednesday: { enabled: true, startTime: "12:00", endTime: "22:00" },
-      thursday: { enabled: true, startTime: "12:00", endTime: "22:00" },
-      friday: { enabled: true, startTime: "12:00", endTime: "23:30" },
-      saturday: { enabled: true, startTime: "12:00", endTime: "23:30" },
-      sunday: { enabled: true, startTime: "13:00", endTime: "22:00" },
+      monday: { enabled: true, open: "12:00", close: "22:00" },
+      tuesday: { enabled: true, open: "12:00", close: "22:00" },
+      wednesday: { enabled: true, open: "12:00", close: "22:00" },
+      thursday: { enabled: true, open: "12:00", close: "22:00" },
+      friday: { enabled: true, open: "12:00", close: "23:30" },
+      saturday: { enabled: true, open: "12:00", close: "23:30" },
+      sunday: { enabled: true, open: "13:00", close: "22:00" },
     },
     orderSettings: {
       acceptDelivery: true,
       acceptPickup: true,
       onlineOrderingActive: true,
-      minDeliveryAmount: 10.0,
-      deliveryFee: 2.5,
+      deliveryRadius: 5,
+      minOrderAmount: 10.0,
     },
     notifications: {
       newOrderAlert: true,
       orderStatusEmail: true,
       dailySummaryReport: true,
-      customerFeedbackAlert: true,
     },
     logoUrl: "/assets/logo.png",
   };
@@ -646,8 +637,8 @@ async function seedDatabase() {
     console.log(`   • Settings: 1\n`);
 
     console.log("📝 Test Credentials:");
-    console.log("   Admin: admin@daakoo.com / admin123");
-    console.log("   Staff: staff@daakoo.com / staff123");
+    console.log("   Admin: admin@daako.com / admin123");
+    console.log("   Staff: staff@daako.com / staff123");
     console.log("   User: john@example.com / john123\n");
 
     process.exit(0);

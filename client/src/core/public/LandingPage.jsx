@@ -4,6 +4,7 @@ import heroImage from "../../assets/hero-image.png";
 import CTA from "../../components/CTA";
 import HollowedCTA from "../../components/HollowedCTA";
 import WhySection from "../../components/Layout/WhySection";
+import { Link } from "react-router-dom";
 const LandingPage = () => {
   return (
     <>
@@ -21,8 +22,12 @@ const LandingPage = () => {
           </p>
           <div className="buttons-container">
             {/* buttons */}
+            <Link to="./menu">
             <CTA title={"Order"} />
+            </Link>
+            <Link to="./about">
             <HollowedCTA title={"Our Story"} />
+            </Link>
           </div>
         </div>
         <div className="right">

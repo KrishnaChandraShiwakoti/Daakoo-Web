@@ -31,9 +31,9 @@ const userModel = new mongoose.Schema({
     type: String,
     default: "",
   },
-  address: {
-    type: String,
-    default: "",
+  addresses: {
+    type: [String],
+    default: [],
   },
 });
 

@@ -3,12 +3,14 @@ import {
   HomeLayout,
   Error,
   LandingPage,
+  Login,
   Menu,
+  Profile,
+  Register,
   About,
   Contact,
-  Location,
 } from "./core";
-import AmdminHomeLayout from "./admin/core/private/HomeLayout";
+import AdminHomeLayout from "./admin/core/private/HomeLayout";
 
 import {
   AdminMenu,
@@ -40,19 +42,28 @@ function App() {
           path: "/about",
           element: <About />,
         },
-        {
-          path: "/locations",
-          element: <Location />,
-        },
+        
         {
           path: "/contact",
           element: <Contact />,
+        },
+        {
+          path: "/login",
+          element: <Login />,
+        },
+        {
+          path: "/register",
+          element: <Register />,
+        },
+        {
+          path: "/profile",
+          element: <Profile />,
         },
       ],
     },
     {
       path: "/admin",
-      element: <AmdminHomeLayout />,
+      element: <AdminHomeLayout />,
       errorElement: <Error />,
       children: [
         {

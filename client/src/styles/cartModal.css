@@ -1,0 +1,130 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap");
+
+.cart-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(2px);
+  z-index: 120;
+  display: grid;
+  justify-items: end;
+}
+
+.cart-modal {
+  height: 100%;
+  width: min(420px, 100vw);
+  background: #121212;
+  border-left: 1px solid #2e2e2e;
+  box-shadow: -10px 0 26px rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+  font-family: "Manrope", sans-serif;
+  color: #ffffff;
+}
+
+.cart-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px;
+  border-bottom: 1px solid #2f2f2f;
+}
+
+.cart-modal-header h2 {
+  margin: 0;
+  font-size: 1.55rem;
+  font-family: "Space Grotesk", sans-serif;
+}
+
+.cart-modal-header button {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid #343434;
+  background: #1e1e1e;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.cart-items {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px 18px;
+}
+
+.cart-item-row {
+  border: 1px solid #303030;
+  border-radius: 12px;
+  background: #181818;
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.cart-item-row h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.cart-item-row p {
+  margin: 4px 0 0;
+  color: #a5a5a5;
+  font-size: 0.85rem;
+}
+
+.cart-item-row strong {
+  color: #e8a020;
+}
+
+.cart-modal-footer {
+  padding: 16px 18px 20px;
+  border-top: 1px solid #2f2f2f;
+}
+
+.cart-total-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.cart-total-row span {
+  color: #a5a5a5;
+}
+
+.cart-total-row strong {
+  color: #ffffff;
+}
+
+.cart-checkout-btn {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(160deg, #e8a020, #c4831e);
+  color: #151515;
+  font-size: 0.9rem;
+  font-weight: 800;
+  padding: 12px;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+.cart-modal-footer p {
+  margin: 0;
+  color: #8c8984;
+  font-size: 0.82rem;
+}
+
+.cart-modal-footer a {
+  color: #e8a020;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .cart-modal {
+    width: 100%;
+  }
+}

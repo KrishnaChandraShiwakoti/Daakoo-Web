@@ -1,0 +1,350 @@
+.profile-page {
+  min-height: calc(100vh - 160px);
+  background:
+    radial-gradient(circle at 85% 10%, rgba(232, 160, 32, 0.16), transparent 34%),
+    radial-gradient(circle at 10% 80%, rgba(232, 160, 32, 0.1), transparent 40%),
+    #070809;
+  color: #f7f4ee;
+  padding: 44px 16px 80px;
+}
+
+.profile-shell {
+  width: min(1140px, 100%);
+  margin: 0 auto;
+}
+
+.profile-hero {
+  border: 1px solid #24262b;
+  background: linear-gradient(145deg, #111318, #0d0f13);
+  border-radius: 28px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.profile-avatar-lg {
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  border: 3px solid #e8a020;
+  background: radial-gradient(circle at 35% 25%, #23272f 0%, #141820 70%);
+  color: #f5c97d;
+  display: grid;
+  place-items: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.profile-hero-info h1 {
+  margin: 0;
+  font-size: clamp(1.5rem, 2.7vw, 2.3rem);
+}
+
+.profile-hero-info p {
+  margin: 6px 0 0;
+  color: #a7adb9;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.75rem;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 18px;
+}
+
+.panel {
+  border: 1px solid #252931;
+  border-radius: 28px;
+  background: linear-gradient(145deg, #12161d, #0d1016);
+  padding: 22px;
+}
+
+.personal-panel {
+  grid-row: span 2;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.panel-head h2 {
+  margin: 0;
+  font-size: 1.65rem;
+}
+
+.profile-two-col {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.personal-panel label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #d4d9e1;
+  font-size: 0.84rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.personal-panel input,
+.personal-panel textarea {
+  border: 1px solid #2e333d;
+  border-radius: 14px;
+  background: #090c11;
+  color: #f4f1ea;
+  padding: 12px 14px;
+  font-size: 0.96rem;
+  outline: none;
+}
+
+.personal-panel input:focus,
+.personal-panel textarea:focus {
+  border-color: #e8a020;
+  box-shadow: 0 0 0 3px rgba(232, 160, 32, 0.16);
+}
+
+.personal-panel input:disabled {
+  color: #949ba8;
+  background: #11151c;
+}
+
+.primary-btn {
+  width: fit-content;
+  min-width: 176px;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(145deg, #edb73c, #d79616);
+  color: #130d03;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 12px 22px;
+  cursor: pointer;
+}
+
+.primary-btn:disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
+}
+
+.settings-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.ghost-item {
+  width: 100%;
+  text-align: left;
+  border: 1px solid #2e333d;
+  background: #0c1016;
+  color: #e6eaf1;
+  border-radius: 12px;
+  padding: 12px 14px;
+  cursor: pointer;
+}
+
+.ghost-item:hover {
+  border-color: #e8a020;
+  color: #f5c97d;
+}
+.ghost-item-active{
+  border-color: #e8a020;
+  color: #f5c97d;
+
+}
+.address-add-btn {
+  border: 1px solid #e8a020;
+  background: rgba(232, 160, 32, 0.12);
+  color: #f5c97d;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+
+.address-add-btn:hover {
+  background: rgba(232, 160, 32, 0.2);
+}
+
+.address-add-form {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+}
+
+.address-add-form input {
+  border: 1px solid #2e333d;
+  border-radius: 12px;
+  background: #090c11;
+  color: #f4f1ea;
+  padding: 11px 12px;
+  font-size: 0.92rem;
+}
+
+.address-add-form input:focus {
+  outline: none;
+  border-color: #e8a020;
+  box-shadow: 0 0 0 3px rgba(232, 160, 32, 0.16);
+}
+
+.address-save-btn {
+  border: 1px solid #e8a020;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #edb73c, #d79616);
+  color: #130d03;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0 14px;
+  cursor: pointer;
+}
+
+.address-card {
+  margin-top: 14px;
+  border: 1px solid #2e333d;
+  border-radius: 14px;
+  background: #0c1016;
+  padding: 14px;
+}
+
+.address-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.address-card h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.address-delete-btn {
+  border: 1px solid #dc5f5f;
+  border-radius: 8px;
+  background: rgba(220, 95, 95, 0.14);
+  color: #f0a7a7;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 6px 10px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.address-delete-btn:hover:not(:disabled) {
+  background: rgba(220, 95, 95, 0.25);
+  border-color: #ff7575;
+  color: #ffb0b0;
+}
+
+.address-delete-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.address-card p {
+  margin: 0;
+  color: #acb2bf;
+  line-height: 1.55;
+}
+
+.profile-message {
+  margin: 0;
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-size: 0.92rem;
+}
+
+.profile-message.success {
+  border: 1px solid rgba(82, 179, 113, 0.45);
+  background: rgba(82, 179, 113, 0.13);
+  color: #9fe5b8;
+}
+
+.profile-message.error {
+  border: 1px solid rgba(220, 95, 95, 0.45);
+  background: rgba(220, 95, 95, 0.13);
+  color: #f0a7a7;
+}
+
+.profile-loading {
+  color: #e7e7e7;
+  text-align: center;
+  padding: 40px 16px;
+  border: 1px dashed #333948;
+  border-radius: 18px;
+  background: #10151d;
+}
+
+@media (max-width: 980px) {
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .personal-panel {
+    grid-row: auto;
+  }
+}
+
+@media (max-width: 680px) {
+  .profile-page {
+    padding: 30px 12px 56px;
+  }
+
+  .profile-hero,
+  .panel {
+    border-radius: 20px;
+    padding: 16px;
+  }
+
+  .profile-two-col {
+    grid-template-columns: 1fr;
+  }
+
+  .panel-head h2 {
+    font-size: 1.34rem;
+  }
+
+  .address-add-form {
+    grid-template-columns: 1fr;
+  }
+
+  .address-save-btn {
+    padding: 10px 14px;
+  }
+
+  .address-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .address-delete-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .primary-btn {
+    width: 100%;
+  }
+}
