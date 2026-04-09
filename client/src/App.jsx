@@ -3,6 +3,7 @@ import {
   HomeLayout,
   Error,
   LandingPage,
+  Orders,
   Login,
   Menu,
   Profile,
@@ -39,10 +40,14 @@ function App() {
           element: <Menu />,
         },
         {
+          path: "/orders",
+          element: <Orders />,
+        },
+        {
           path: "/about",
           element: <About />,
         },
-        
+
         {
           path: "/contact",
           element: <Contact />,

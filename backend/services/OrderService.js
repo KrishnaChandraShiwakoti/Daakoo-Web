@@ -45,6 +45,12 @@ class OrderService {
     return await Order.findById(id).populate("userId").populate("items.menuId");
   }
 
+  async getOrdersByUserId(userId) {
+    return await Order.find({ userId })
+      .populate("items.menuId", "name")
+      .sort({ createdAt: -1 });
+  }
+
   async updateOrderStatus(id, status) {
     if (
       ![

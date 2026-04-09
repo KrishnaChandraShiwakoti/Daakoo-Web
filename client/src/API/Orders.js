@@ -23,6 +23,16 @@ export const getOrderById = async (id) => {
   return res.data.data;
 };
 
+export const getOrdersByUserId = async (userId, token) => {
+  const res = await orders.get(`/user/${encodeURIComponent(userId)}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return res.data.data;
+};
+
 export const updateOrderStatus = async (id, status) => {
   const res = await orders.put(`/${id}/status`, { status });
   return res.data.data;

@@ -29,7 +29,7 @@ const Navbar = () => {
   }
 
   const isLoggedIn = Boolean(localStorage.getItem("daakooToken") && user);
-  const userLabel = user?.fName ||  "User";
+  const userLabel = user?.fName || "User";
   const userInitial = userLabel.charAt(0).toUpperCase();
 
   const handleLogout = () => {
@@ -44,6 +44,12 @@ const Navbar = () => {
     setIsProfileOpen(false);
     setIsMenuOpen(false);
     navigate("/profile");
+  };
+
+  const handleGoToOrders = () => {
+    setIsProfileOpen(false);
+    setIsMenuOpen(false);
+    navigate("/orders");
   };
 
   return (
@@ -159,7 +165,16 @@ const Navbar = () => {
                 onClick={handleGoToProfile}>
                 My Profile
               </button>
-              <button type="button" className="logout-btn" onClick={handleLogout}>
+              <button
+                type="button"
+                className="profile-btn"
+                onClick={handleGoToOrders}>
+                My Orders
+              </button>
+              <button
+                type="button"
+                className="logout-btn"
+                onClick={handleLogout}>
                 Logout
               </button>
             </div>

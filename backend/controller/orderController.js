@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const orderService = require("../services/OrderService.js");
 const customerService = require("../services/CustomerService.js");
 
@@ -79,6 +80,29 @@ exports.getOrderById = async (req, res) => {
   }
 };
 
+exports.getOrdersByUserId = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ message: "Invalid user id" });
+    }
+
+    if (req.user?.id !== userId) {
+      return res.status(403).json({ message: "Forbidden" });
+    }
+
+    const orders = await orderService.getOrdersByUserId(userId);
+
+    return res.status(200).json({ message: "ok", data: orders });
+  } catch (error) {
+    console.error("Error in getOrdersByUserId:", error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal Server Error" });
+  }
+};
+
 exports.updateOrderStatus = async (req, res) => {
   try {
     const { id } = req.params;
@@ -94,12 +118,10 @@ exports.updateOrderStatus = async (req, res) => {
       return res.status(404).json({ message: "Order not found" });
     }
 
-    return res
-      .status(200)
-      .json({
-        message: "Order status updated successfully",
-        data: updatedOrder,
-      });
+    return res.status(200).json({
+      message: "Order status updated successfully",
+      data: updatedOrder,
+    });
   } catch (error) {
     if (error.message === "Invalid status") {
       return res.status(400).json({ message: error.message });

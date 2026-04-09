@@ -44,16 +44,21 @@ exports.login = async (req, res) => {
   try {
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(401).json({ message: "Please check your password or email" });
+      return res
+        .status(401)
+        .json({ message: "Please check your password or email" });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return res.status(401).json({ message: "Please check your password or email" });
+      return res
+        .status(401)
+        .json({ message: "Please check your password or email" });
     }
 
     const token = generateToken({ id: user.id });
     res.status(200).json({
+      id: user.id,
       email: user.email,
       role: user.role,
       fName: user.fName,
@@ -95,8 +100,7 @@ exports.updateProfile = async (req, res) => {
 
     user.fName = typeof fName === "string" ? fName.trim() : user.fName;
     user.lName = typeof lName === "string" ? lName.trim() : user.lName;
-    user.contact =
-      typeof contact === "string" ? contact.trim() : user.contact;
+    user.contact = typeof contact === "string" ? contact.trim() : user.contact;
 
     const normalizedAddresses = normalizeAddresses(addresses, address);
     if (normalizedAddresses !== null) {
@@ -126,7 +130,9 @@ exports.changePassword = async (req, res) => {
   const { oldPassword, newPassword, confirmPassword } = req.body;
 
   if (!oldPassword || !newPassword || !confirmPassword) {
-    return res.status(400).json({ message: "All password fields are required" });
+    return res
+      .status(400)
+      .json({ message: "All password fields are required" });
   }
 
   if (newPassword.length < 6) {
@@ -155,7 +161,9 @@ exports.changePassword = async (req, res) => {
     if (isSamePassword) {
       return res
         .status(400)
-        .json({ message: "New password must be different from current password" });
+        .json({
+          message: "New password must be different from current password",
+        });
     }
 
     user.password = await bcrypt.hash(newPassword, saltRounds);
