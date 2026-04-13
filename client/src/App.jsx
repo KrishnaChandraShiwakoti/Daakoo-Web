@@ -23,6 +23,14 @@ import {
   AdminReviews,
   AdminSettings,
 } from "./admin/core/private";
+import {
+  StaffHomeLayout,
+  StaffInventory,
+  StaffLiveOrders,
+  StaffOrderDetail,
+  StaffOrderHistory,
+  StaffReadyForPickup,
+} from "./staff/core/private";
 
 function App() {
   const router = createBrowserRouter([
@@ -102,6 +110,33 @@ function App() {
         {
           element: <AdminReviews />,
           path: "reviews",
+        },
+      ],
+    },
+    {
+      path: "/staff",
+      element: <StaffHomeLayout />,
+      errorElement: <Error />,
+      children: [
+        {
+          element: <StaffLiveOrders />,
+          index: "true",
+        },
+        {
+          path: "ready",
+          element: <StaffReadyForPickup />,
+        },
+        {
+          path: "history",
+          element: <StaffOrderHistory />,
+        },
+        {
+          path: "orders/:id",
+          element: <StaffOrderDetail />,
+        },
+        {
+          path: "inventory",
+          element: <StaffInventory />,
         },
       ],
     },
