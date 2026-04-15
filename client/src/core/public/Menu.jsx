@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { getAllDishes } from "../../API/Menu";
 import { getAllCategories } from "../../API/Categories";
+import { addItemToCart } from "../../utils/cart";
 import "../../styles/menuPage.css";
 
 const FILTERS = [
@@ -116,6 +117,10 @@ const Menu = () => {
     }, {});
   }, [filteredDishes]);
 
+  const handleAddToCart = (dish) => {
+    addItemToCart(dish);
+  };
+
   return (
     <section className="menu-page">
       <div className="menu-shell">
@@ -210,7 +215,11 @@ const Menu = () => {
 
                         <div className="dish-bottom-row">
                           <strong>{formatPrice(dish.price)}</strong>
-                          <button type="button">+ Add</button>
+                          <button
+                            type="button"
+                            onClick={() => handleAddToCart(dish)}>
+                            + Add
+                          </button>
                         </div>
                       </div>
                     </article>

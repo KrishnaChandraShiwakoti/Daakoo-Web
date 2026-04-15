@@ -146,6 +146,7 @@
 .contact-map-panel {
   position: relative;
   min-height: 720px;
+  width: 110%;
   background:
     linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
@@ -201,10 +202,9 @@
 
 .map-overlay-list {
   position: absolute;
-  right: 40px;
-  bottom: 40px;
+  top: 30%;
+  right: 30%;
   z-index: 2;
-  width: 230px;
   display: grid;
   gap: 12px;
 }

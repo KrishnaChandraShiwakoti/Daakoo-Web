@@ -1,21 +1,6 @@
 import { Link } from "react-router-dom";
 import "../styles/cartModal.css";
 
-const sampleCartItems = [
-  {
-    id: "butter-chicken",
-    name: "Butter Chicken",
-    qty: 1,
-    price: 12.5,
-  },
-  {
-    id: "garlic-naan",
-    name: "Garlic Naan",
-    qty: 2,
-    price: 3.25,
-  },
-];
-
 const formatPrice = (value) => {
   return new Intl.NumberFormat("en-GB", {
     style: "currency",
@@ -23,20 +8,17 @@ const formatPrice = (value) => {
   }).format(value);
 };
 
-const CartModal = ({ isOpen, onClose }) => {
+const CartModal = ({ isOpen, onClose, cartItems = [] }) => {
   if (!isOpen) {
     return null;
   }
 
-  const subtotal = sampleCartItems.reduce((sum, item) => {
+  const subtotal = cartItems.reduce((sum, item) => {
     return sum + item.qty * item.price;
   }, 0);
 
   return (
-    <div
-      className="cart-modal-overlay"
-      role="presentation"
-      onClick={onClose}>
+    <div className="cart-modal-overlay" role="presentation" onClick={onClose}>
       <aside
         className="cart-modal"
         role="dialog"
@@ -51,15 +33,19 @@ const CartModal = ({ isOpen, onClose }) => {
         </header>
 
         <div className="cart-items">
-          {sampleCartItems.map((item) => (
-            <article key={item.id} className="cart-item-row">
-              <div>
-                <h3>{item.name}</h3>
-                <p>Qty: {item.qty}</p>
-              </div>
-              <strong>{formatPrice(item.qty * item.price)}</strong>
-            </article>
-          ))}
+          {cartItems.length === 0 ? (
+            <p>Your cart is empty.</p>
+          ) : (
+            cartItems.map((item) => (
+              <article key={item.id} className="cart-item-row">
+                <div>
+                  <h3>{item.name}</h3>
+                  <p>Qty: {item.qty}</p>
+                </div>
+                <strong>{formatPrice(item.qty * item.price)}</strong>
+              </article>
+            ))
+          )}
         </div>
 
         <footer className="cart-modal-footer">

@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import "../styles/navbar.css";
 import CartModal from "./CartModal";
+import { getCartItemCount, readCartItems } from "../utils/cart";
 
 const navItems = [
   { label: "Menu", to: "/menu", key: "menu" },
@@ -14,6 +15,25 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
+
+  useEffect(() => {
+    setCartItems(readCartItems());
+
+    const handleCartUpdate = () => {
+      setCartItems(readCartItems());
+    };
+
+    window.addEventListener("daakoo-cart-updated", handleCartUpdate);
+    window.addEventListener("storage", handleCartUpdate);
+
+    return () => {
+      window.removeEventListener("daakoo-cart-updated", handleCartUpdate);
+      window.removeEventListener("storage", handleCartUpdate);
+    };
+  }, []);
+
+  const cartItemCount = useMemo(() => getCartItemCount(cartItems), [cartItems]);
 
   const closeMenu = () => {
     setIsMenuOpen(false);
@@ -141,7 +161,7 @@ const Navbar = () => {
             closeMenu();
             setIsCartOpen(true);
           }}>
-          Cart
+          Cart ({cartItemCount})
         </button>
 
         {isLoggedIn ? (
@@ -192,7 +212,11 @@ const Navbar = () => {
         )}
       </div>
 
-      <CartModal isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+      <CartModal
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        cartItems={cartItems}
+      />
     </nav>
   );
 };
