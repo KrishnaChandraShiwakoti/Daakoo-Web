@@ -44,7 +44,7 @@ app.use("/api/v1/settings", settingsRouter);
 app.use("/api/v1/analytics", analyticsRouter);
 
 //health check
-app.get("/health", (req, res) => {
+app.get("/", (req, res) => {
   res.send("The API is running smoothly!");
 });
 

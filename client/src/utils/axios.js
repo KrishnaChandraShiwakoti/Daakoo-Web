@@ -1,33 +1,37 @@
 import axios from "axios";
 
+const BACKEND_URL = (
+  import.meta.env.BACKEND_URL || "http://localhost:3000"
+).replace(/\/+$/, "");
+
 export const menu = axios.create({
-  baseURL: "http://localhost:3000/api/v1/menu",
+  baseURL: `${BACKEND_URL}/api/v1/menu`,
 });
 
 export const categories = axios.create({
-  baseURL: "http://localhost:3000/api/v1/categories",
+  baseURL: `${BACKEND_URL}/api/v1/categories`,
 });
 
 export const orders = axios.create({
-  baseURL: "http://localhost:3000/api/v1/orders",
+  baseURL: `${BACKEND_URL}/api/v1/orders`,
 });
 
 export const reviews = axios.create({
-  baseURL: "http://localhost:3000/api/v1/reviews",
+  baseURL: `${BACKEND_URL}/api/v1/reviews`,
 });
 
 export const customers = axios.create({
-  baseURL: "http://localhost:3000/api/v1/customers",
+  baseURL: `${BACKEND_URL}/api/v1/customers`,
 });
 
 export const settings = axios.create({
-  baseURL: "http://localhost:3000/api/v1/settings",
+  baseURL: `${BACKEND_URL}/api/v1/settings`,
 });
 
 export const dashboard = axios.create({
-  baseURL: "http://localhost:3000/api/v1",
+  baseURL: `${BACKEND_URL}/api/v1`,
 });
 
 export const auth = axios.create({
-  baseURL: "http://localhost:3000/api/v1/user",
+  baseURL: `${BACKEND_URL}/api/v1/user`,
 });
