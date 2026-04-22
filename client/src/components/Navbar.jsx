@@ -215,6 +215,10 @@ const Navbar = () => {
       <CartModal
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
+        onCheckout={() => {
+          setIsCartOpen(false);
+          navigate("/checkout");
+        }}
         cartItems={cartItems}
       />
     </nav>

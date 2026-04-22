@@ -1,6 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { loginUser } from "../../API/Auth";
+import {
+  getDashboardPathByRole,
+  readStoredSession,
+} from "../../utils/authSession";
 import "../../styles/auth.css";
 
 const Login = () => {
@@ -10,6 +14,14 @@ const Login = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState(location.state?.message || "");
+
+  useEffect(() => {
+    const { isAuthenticated, role } = readStoredSession();
+
+    if (isAuthenticated) {
+      navigate(getDashboardPathByRole(role), { replace: true });
+    }
+  }, [navigate]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -32,10 +44,11 @@ const Login = () => {
 
       localStorage.setItem("daakooToken", data.refreshJWT);
       localStorage.setItem("daakooUser", JSON.stringify(data));
-      navigate("/", { replace: true });
+      navigate(getDashboardPathByRole(data.role), { replace: true });
     } catch (error) {
       setErrorMsg(
-        error?.response?.data?.message || "Unable to login right now. Try again.",
+        error?.response?.data?.message ||
+          "Unable to login right now. Try again.",
       );
     } finally {
       setIsSubmitting(false);
@@ -62,7 +75,9 @@ const Login = () => {
         <form className="auth-card" onSubmit={handleSubmit}>
           <h2>Login</h2>
 
-          {successMsg ? <p className="auth-message success">{successMsg}</p> : null}
+          {successMsg ? (
+            <p className="auth-message success">{successMsg}</p>
+          ) : null}
           {errorMsg ? <p className="auth-message error">{errorMsg}</p> : null}
 
           <label>

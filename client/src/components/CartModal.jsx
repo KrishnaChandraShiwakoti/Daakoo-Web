@@ -8,7 +8,7 @@ const formatPrice = (value) => {
   }).format(value);
 };
 
-const CartModal = ({ isOpen, onClose, cartItems = [] }) => {
+const CartModal = ({ isOpen, onClose, onCheckout, cartItems = [] }) => {
   if (!isOpen) {
     return null;
   }
@@ -53,8 +53,16 @@ const CartModal = ({ isOpen, onClose, cartItems = [] }) => {
             <span>Subtotal</span>
             <strong>{formatPrice(subtotal)}</strong>
           </div>
-          <button type="button" className="cart-checkout-btn">
-            Checkout
+          <button
+            type="button"
+            className="cart-checkout-btn"
+            disabled={cartItems.length === 0}
+            onClick={() => {
+              if (cartItems.length > 0) {
+                onCheckout?.();
+              }
+            }}>
+            Proceed to Checkout
           </button>
           <p>
             Need an account for faster checkout? <Link to="/login">Login</Link>

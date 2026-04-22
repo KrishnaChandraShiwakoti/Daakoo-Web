@@ -4,6 +4,8 @@ export { default as Error } from "./public/Error";
 export { default as HomeLayout } from "./public/HomeLayout";
 export { default as LandingPage } from "./public/LandingPage";
 export { default as Orders } from "./public/Orders";
+export { default as Checkout } from "./public/Checkout";
+export { default as Payment } from "./public/Payment";
 export { default as Login } from "./public/Login";
 export { default as Menu } from "./public/Menu";
 export { default as Profile } from "./public/Profile";

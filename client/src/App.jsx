@@ -1,9 +1,15 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import {
+  Navigate,
+  RouterProvider,
+  createBrowserRouter,
+} from "react-router-dom";
 import {
   HomeLayout,
   Error,
   LandingPage,
   Orders,
+  Checkout,
+  Payment,
   Login,
   Menu,
   Profile,
@@ -31,6 +37,32 @@ import {
   StaffOrderHistory,
   StaffReadyForPickup,
 } from "./staff/core/private";
+import { getDashboardPathByRole, readStoredSession } from "./utils/authSession";
+
+const StartupRoute = () => {
+  const { isAuthenticated, role } = readStoredSession();
+
+  if (!isAuthenticated) {
+    return <LandingPage />;
+  }
+
+  const dashboardPath = getDashboardPathByRole(role);
+  if (dashboardPath === "/") {
+    return <LandingPage />;
+  }
+
+  return <Navigate to={dashboardPath} replace />;
+};
+
+const LoginRoute = () => {
+  const { isAuthenticated, role } = readStoredSession();
+
+  if (!isAuthenticated) {
+    return <Login />;
+  }
+
+  return <Navigate to={getDashboardPathByRole(role)} replace />;
+};
 
 function App() {
   const router = createBrowserRouter([
@@ -40,7 +72,7 @@ function App() {
       errorElement: <Error />,
       children: [
         {
-          element: <LandingPage />,
+          element: <StartupRoute />,
           index: "true",
         },
         {
@@ -50,6 +82,14 @@ function App() {
         {
           path: "/orders",
           element: <Orders />,
+        },
+        {
+          path: "/checkout",
+          element: <Checkout />,
+        },
+        {
+          path: "/payment",
+          element: <Payment />,
         },
         {
           path: "/about",
@@ -62,7 +102,7 @@ function App() {
         },
         {
           path: "/login",
-          element: <Login />,
+          element: <LoginRoute />,
         },
         {
           path: "/register",

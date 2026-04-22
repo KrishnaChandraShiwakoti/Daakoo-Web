@@ -64,6 +64,39 @@ export const addItemToCart = (dish) => {
   ]);
 };
 
+export const updateCartItemQty = (itemId, nextQty) => {
+  if (!itemId) {
+    return;
+  }
+
+  const normalizedQty = Math.max(1, Number(nextQty) || 1);
+  const updatedItems = readCartItems().map((item) => {
+    if (item.id !== itemId) {
+      return item;
+    }
+
+    return {
+      ...item,
+      qty: normalizedQty,
+    };
+  });
+
+  writeCartItems(updatedItems);
+};
+
+export const removeItemFromCart = (itemId) => {
+  if (!itemId) {
+    return;
+  }
+
+  const updatedItems = readCartItems().filter((item) => item.id !== itemId);
+  writeCartItems(updatedItems);
+};
+
+export const clearCartItems = () => {
+  writeCartItems([]);
+};
+
 export const getCartItemCount = (items) => {
   return items.reduce((sum, item) => sum + (Number(item.qty) || 0), 0);
 };
