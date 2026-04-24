@@ -35,6 +35,41 @@ const userModel = new mongoose.Schema({
     type: [String],
     default: [],
   },
+  paymentMethods: {
+    type: [
+      {
+        cardHolderName: {
+          type: String,
+          required: true,
+        },
+        brand: {
+          type: String,
+          default: "card",
+        },
+        last4: {
+          type: String,
+          required: true,
+        },
+        expiryMonth: {
+          type: String,
+          required: true,
+        },
+        expiryYear: {
+          type: String,
+          required: true,
+        },
+        isDefault: {
+          type: Boolean,
+          default: false,
+        },
+        createdAt: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+    ],
+    default: [],
+  },
 });
 
 const User = mongoose.model("User", userModel);

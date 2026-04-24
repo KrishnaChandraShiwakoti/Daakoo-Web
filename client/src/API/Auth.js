@@ -36,3 +36,21 @@ export const changeMyPassword = async (payload, token) => {
   });
   return res.data;
 };
+
+export const getMyPaymentMethods = async (token) => {
+  const res = await auth.get("/me/payment-methods", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return res.data;
+};
+
+export const addMyPaymentMethod = async (payload, token) => {
+  const res = await auth.post("/me/payment-methods", payload, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return res.data;
+};

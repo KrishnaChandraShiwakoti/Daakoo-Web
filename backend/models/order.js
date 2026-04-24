@@ -54,6 +54,10 @@ const orderSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    pickupLocation: {
+      type: String,
+      default: "",
+    },
     notes: {
       type: String,
       default: "",

@@ -1,5 +1,6 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { addMyPaymentMethod, getMyPaymentMethods } from "../../API/Auth";
 import { createOrder } from "../../API/Orders";
 import { readStoredSession } from "../../utils/authSession";
 import { clearCartItems, readCartItems } from "../../utils/cart";
@@ -31,18 +32,41 @@ const getUserId = (user) => {
   return user?._id || user?.id || user?.userId || null;
 };
 
+const getMethodId = (method) => {
+  return method?.id || method?._id || "";
+};
+
+const getMethodLabel = (method) => {
+  const brand = (method?.brand || "card").toUpperCase();
+  const last4 = method?.last4 || "----";
+  return `${brand} .... .... .... ${last4}`;
+};
+
+const getMethodExpiry = (method) => {
+  const month = method?.expiryMonth || "--";
+  const year = method?.expiryYear || "--";
+  return `${month}/${year}`;
+};
+
 const Payment = () => {
   const navigate = useNavigate();
-  const { user, isAuthenticated } = readStoredSession();
+  const { user, token, isAuthenticated } = readStoredSession();
   const cartItems = readCartItems();
   const draft = readCheckoutDraft();
 
-  const [cardName, setCardName] = useState(draft?.fullName || "");
-  const [cardNumber, setCardNumber] = useState("");
-  const [expiry, setExpiry] = useState("");
-  const [cvv, setCvv] = useState("");
+  const [savedMethods, setSavedMethods] = useState([]);
+  const [savedMethodId, setSavedMethodId] = useState("");
+  const [isLoadingMethods, setIsLoadingMethods] = useState(true);
+  const [showAddMethodForm, setShowAddMethodForm] = useState(false);
+  const [newMethod, setNewMethod] = useState({
+    cardHolderName: draft?.fullName || "",
+    cardNumber: "",
+    expiry: "",
+  });
+  const [isAddingMethod, setIsAddingMethod] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
   const [placedOrderId, setPlacedOrderId] = useState("");
 
   const subtotal = useMemo(() => {
@@ -50,29 +74,67 @@ const Payment = () => {
   }, [cartItems]);
 
   const orderType = draft?.orderType || "pickup";
+  const pickupLocation = draft?.pickupLocation || "";
   const deliveryFee = orderType === "delivery" ? 3.5 : 0;
   const total = subtotal + deliveryFee;
 
-  const handlePayment = async (event) => {
-    event.preventDefault();
+  useEffect(() => {
+    const loadMethods = async () => {
+      if (!isAuthenticated || !token) {
+        setIsLoadingMethods(false);
+        return;
+      }
+
+      try {
+        setIsLoadingMethods(true);
+        const data = await getMyPaymentMethods(token);
+        const methods = Array.isArray(data?.paymentMethods)
+          ? data.paymentMethods
+          : [];
+        setSavedMethods(methods);
+        setSavedMethodId((current) => {
+          if (
+            current &&
+            methods.some((method) => getMethodId(method) === current)
+          ) {
+            return current;
+          }
+
+          const defaultMethod = methods.find((method) => method.isDefault);
+          return getMethodId(defaultMethod || methods[0]);
+        });
+      } catch {
+        setErrorMsg("Unable to load saved payment methods.");
+      } finally {
+        setIsLoadingMethods(false);
+      }
+    };
+
+    loadMethods();
+  }, [isAuthenticated, token]);
+
+  const handleNewMethodChange = (event) => {
+    const { name, value } = event.target;
+    setNewMethod((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleAddMethod = async () => {
     setErrorMsg("");
+    setSuccessMsg("");
 
-    if (cartItems.length === 0) {
-      setErrorMsg("Your cart is empty. Please return to menu.");
+    if (!token) {
+      navigate("/login", {
+        state: {
+          message: "Please login to manage your payment methods.",
+        },
+      });
       return;
     }
 
-    if (!draft) {
-      setErrorMsg("Please complete the checkout details first.");
-      navigate("/checkout", { replace: true });
-      return;
-    }
+    const normalizedCardNumber = newMethod.cardNumber.replace(/\s+/g, "");
+    const normalizedExpiry = newMethod.expiry.trim();
 
-    const normalizedCardNumber = cardNumber.replace(/\s+/g, "");
-    const normalizedExpiry = expiry.replace(/\s+/g, "");
-    const normalizedCvv = cvv.replace(/\s+/g, "");
-
-    if (!cardName.trim()) {
+    if (!newMethod.cardHolderName.trim()) {
       setErrorMsg("Card holder name is required.");
       return;
     }
@@ -87,8 +149,62 @@ const Payment = () => {
       return;
     }
 
-    if (!/^\d{3,4}$/.test(normalizedCvv)) {
-      setErrorMsg("CVV must be 3 or 4 digits.");
+    try {
+      setIsAddingMethod(true);
+      const data = await addMyPaymentMethod(
+        {
+          cardHolderName: newMethod.cardHolderName.trim(),
+          cardNumber: normalizedCardNumber,
+          expiry: normalizedExpiry,
+        },
+        token,
+      );
+      const createdMethod = data?.paymentMethod;
+
+      if (createdMethod) {
+        setSavedMethods((prev) => [...prev, createdMethod]);
+        setSavedMethodId(getMethodId(createdMethod));
+      }
+
+      setShowAddMethodForm(false);
+      setSuccessMsg("Payment method added successfully.");
+      setNewMethod({
+        cardHolderName: draft?.fullName || "",
+        cardNumber: "",
+        expiry: "",
+      });
+    } catch (error) {
+      setErrorMsg(
+        error?.response?.data?.message || "Unable to add payment method.",
+      );
+    } finally {
+      setIsAddingMethod(false);
+    }
+  };
+
+  const handlePayment = async (event) => {
+    event.preventDefault();
+    setErrorMsg("");
+    setSuccessMsg("");
+
+    if (cartItems.length === 0) {
+      setErrorMsg("Your cart is empty. Please return to menu.");
+      return;
+    }
+
+    if (!draft) {
+      setErrorMsg("Please complete the checkout details first.");
+      navigate("/checkout", { replace: true });
+      return;
+    }
+
+    if (savedMethods.length === 0) {
+      setErrorMsg("Please add a payment method before placing your order.");
+      return;
+    }
+
+    if (!savedMethodId) {
+      setErrorMsg("Please select a saved payment method.");
       return;
     }
 
@@ -118,6 +234,7 @@ const Payment = () => {
       totalAmount: total,
       type: orderType,
       deliveryAddress: orderType === "delivery" ? draft.address || "" : "",
+      pickupLocation: orderType === "pickup" ? pickupLocation : "",
       notes: draft?.notes || "",
     };
 
@@ -191,81 +308,110 @@ const Payment = () => {
   return (
     <main className="payment-page">
       <section className="payment-shell">
-        <header className="payment-header">
-          <p>Payment</p>
-          <h1>Secure Checkout</h1>
-          <span>
-            {draft?.orderType === "delivery" ? "Delivery" : "Pickup"} order
-          </span>
-        </header>
+        <form className="payment-grid" onSubmit={handlePayment}>
+          <section className="payment-panel payment-left">
+            <header className="payment-hero">
+              <h1>Finalize Your Feast</h1>
+              <p>
+                Select a payment method to complete your order at The Alchemist.
+              </p>
+            </header>
 
-        <div className="payment-grid">
-          <form className="payment-card" onSubmit={handlePayment}>
-            <h2>Card Details</h2>
+            <div className="payment-block">
+              <p className="payment-block-title">Saved Methods</p>
+              {isLoadingMethods ? (
+                <p className="payment-note">Loading saved methods...</p>
+              ) : savedMethods.length > 0 ? (
+                <div className="saved-methods-grid">
+                  {savedMethods.map((method) => {
+                    const methodId = getMethodId(method);
+                    const isActive = savedMethodId === methodId;
+                    return (
+                      <button
+                        key={methodId}
+                        type="button"
+                        className={`saved-method-card ${isActive ? "active" : ""}`}
+                        onClick={() => setSavedMethodId(methodId)}
+                        aria-label={`Use card ending with ${method.last4}`}>
+                        <span className="card-chip" />
+                        <strong>{getMethodLabel(method)}</strong>
+                        <small>EXP: {getMethodExpiry(method)}</small>
+                      </button>
+                    );
+                  })}
+                </div>
+              ) : (
+                <div className="payment-empty-methods">
+                  <p>No saved payment methods yet.</p>
+                  <button
+                    type="button"
+                    className="payment-add-method-btn"
+                    onClick={() => setShowAddMethodForm((prev) => !prev)}>
+                    {showAddMethodForm ? "Cancel" : "Add Payment Method"}
+                  </button>
+                </div>
+              )}
 
-            <label>
-              Card Holder Name
-              <input
-                type="text"
-                value={cardName}
-                onChange={(event) => setCardName(event.target.value)}
-                placeholder="Name on card"
-                required
-              />
-            </label>
+              {showAddMethodForm ? (
+                <div className="payment-add-form">
+                  <label>
+                    Cardholder Name
+                    <input
+                      type="text"
+                      name="cardHolderName"
+                      value={newMethod.cardHolderName}
+                      onChange={handleNewMethodChange}
+                      placeholder="Alexander Vane"
+                      required
+                    />
+                  </label>
 
-            <label>
-              Card Number
-              <input
-                type="text"
-                inputMode="numeric"
-                maxLength={19}
-                value={cardNumber}
-                onChange={(event) => setCardNumber(event.target.value)}
-                placeholder="1234 5678 9012 3456"
-                required
-              />
-            </label>
+                  <label>
+                    Card Number
+                    <input
+                      type="text"
+                      name="cardNumber"
+                      inputMode="numeric"
+                      maxLength={19}
+                      value={newMethod.cardNumber}
+                      onChange={handleNewMethodChange}
+                      placeholder="0000 0000 0000 0000"
+                      required
+                    />
+                  </label>
 
-            <div className="payment-row">
-              <label>
-                Expiry (MM/YY)
-                <input
-                  type="text"
-                  maxLength={5}
-                  value={expiry}
-                  onChange={(event) => setExpiry(event.target.value)}
-                  placeholder="08/28"
-                  required
-                />
-              </label>
+                  <label>
+                    Expiry Date
+                    <input
+                      type="text"
+                      name="expiry"
+                      maxLength={5}
+                      value={newMethod.expiry}
+                      onChange={handleNewMethodChange}
+                      placeholder="MM/YY"
+                      required
+                    />
+                  </label>
 
-              <label>
-                CVV
-                <input
-                  type="password"
-                  inputMode="numeric"
-                  maxLength={4}
-                  value={cvv}
-                  onChange={(event) => setCvv(event.target.value)}
-                  placeholder="123"
-                  required
-                />
-              </label>
+                  <button
+                    type="button"
+                    className="payment-add-method-btn"
+                    onClick={handleAddMethod}
+                    disabled={isAddingMethod}>
+                    {isAddingMethod ? "Saving..." : "Save Method"}
+                  </button>
+                </div>
+              ) : null}
             </div>
 
+            {successMsg ? (
+              <p className="payment-success-msg">{successMsg}</p>
+            ) : null}
             {errorMsg ? <p className="payment-error">{errorMsg}</p> : null}
+          </section>
 
-            <button
-              type="submit"
-              className="payment-main-btn"
-              disabled={isSubmitting}>
-              {isSubmitting ? "Processing..." : `Pay ${formatPrice(total)}`}
-            </button>
-          </form>
-
-          <aside className="payment-summary">
-            <h2>Order Summary</h2>
+          <aside className="payment-panel payment-summary">
+            <p className="payment-summary-title">Order Summary</p>
 
             <div className="payment-summary-list">
               {cartItems.map((item) => (
@@ -285,14 +431,21 @@ const Payment = () => {
                 <strong>{formatPrice(subtotal)}</strong>
               </div>
               <div>
-                <span>Delivery fee</span>
+                <span>Delivery Fee</span>
                 <strong>{formatPrice(deliveryFee)}</strong>
               </div>
               <div className="grand-total">
-                <span>Total</span>
+                <span>Total Amount</span>
                 <strong>{formatPrice(total)}</strong>
               </div>
             </div>
+
+            <button
+              type="submit"
+              className="payment-main-btn"
+              disabled={isSubmitting}>
+              {isSubmitting ? "Processing..." : "Complete Transaction"}
+            </button>
 
             <div className="payment-customer-info">
               <p>
@@ -302,11 +455,16 @@ const Payment = () => {
               {draft?.orderType === "delivery" ? (
                 <p>{draft?.address}</p>
               ) : (
-                <p>Pickup at restaurant</p>
+                <p>{pickupLocation || "Pickup at restaurant"}</p>
               )}
             </div>
+
+            <p className="payment-summary-footnote">
+              Secure payment processed via encrypted gateway. By paying you
+              agree to our terms of service.
+            </p>
           </aside>
-        </div>
+        </form>
       </section>
     </main>
   );

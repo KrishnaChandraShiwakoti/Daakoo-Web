@@ -1,5 +1,6 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { getSettings } from "../../API/Settings";
 import {
   readCartItems,
   removeItemFromCart,
@@ -9,6 +10,41 @@ import { readStoredSession } from "../../utils/authSession";
 import "../../styles/checkout.css";
 
 const CHECKOUT_DRAFT_KEY = "daakooCheckoutDraft";
+
+const DEFAULT_PICKUP_LOCATIONS = [
+  {
+    value: "Daakoo West End Lane, West End Lane, London",
+    label: "Daakoo West End Lane - West End Lane, London",
+  },
+  {
+    value: "Daakoo Ladbroke Grove, Ladbroke Grove, London",
+    label: "Daakoo Ladbroke Grove - Ladbroke Grove, London",
+  },
+];
+
+const buildPickupOptions = (settings) => {
+  const optionMap = new Map();
+
+  const restaurantName = settings?.restaurantName?.trim();
+  const restaurantAddress = settings?.address?.trim();
+  if (restaurantAddress) {
+    const displayName = restaurantName || "Daakoo Restaurant";
+    const configuredOption = {
+      value: `${displayName}, ${restaurantAddress}`,
+      label: `${displayName} - ${restaurantAddress}`,
+    };
+    optionMap.set(configuredOption.value.toLowerCase(), configuredOption);
+  }
+
+  DEFAULT_PICKUP_LOCATIONS.forEach((option) => {
+    const key = option.value.toLowerCase();
+    if (!optionMap.has(key)) {
+      optionMap.set(key, option);
+    }
+  });
+
+  return Array.from(optionMap.values());
+};
 
 const formatPrice = (value) => {
   return new Intl.NumberFormat("en-GB", {
@@ -34,6 +70,8 @@ const Checkout = () => {
   const navigate = useNavigate();
   const { user } = readStoredSession();
   const savedDraft = readCheckoutDraft();
+  const defaultPickupLocation =
+    savedDraft?.pickupLocation || DEFAULT_PICKUP_LOCATIONS[0].value;
 
   const [cartItems, setCartItems] = useState(() => readCartItems());
   const [orderType, setOrderType] = useState(savedDraft?.orderType || "pickup");
@@ -46,8 +84,40 @@ const Checkout = () => {
   const [address, setAddress] = useState(
     savedDraft?.address || user?.addresses?.[0] || "",
   );
+  const [pickupOptions, setPickupOptions] = useState(DEFAULT_PICKUP_LOCATIONS);
+  const [pickupLocation, setPickupLocation] = useState(defaultPickupLocation);
   const [notes, setNotes] = useState(savedDraft?.notes || "");
   const [errorMsg, setErrorMsg] = useState("");
+
+  useEffect(() => {
+    let mounted = true;
+
+    const loadPickupOptions = async () => {
+      try {
+        const settings = await getSettings();
+        if (!mounted) return;
+
+        const nextOptions = buildPickupOptions(settings);
+        setPickupOptions(nextOptions);
+        setPickupLocation((current) => {
+          const exists = nextOptions.some((option) => option.value === current);
+          return exists ? current : nextOptions[0]?.value || "";
+        });
+      } catch {
+        if (!mounted) return;
+
+        setPickupLocation(
+          (current) => current || DEFAULT_PICKUP_LOCATIONS[0].value,
+        );
+      }
+    };
+
+    loadPickupOptions();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const subtotal = useMemo(() => {
     return cartItems.reduce((sum, item) => sum + item.qty * item.price, 0);
@@ -95,6 +165,11 @@ const Checkout = () => {
       return;
     }
 
+    if (orderType === "pickup" && !pickupLocation.trim()) {
+      setErrorMsg("Please choose a pickup location.");
+      return;
+    }
+
     sessionStorage.setItem(
       CHECKOUT_DRAFT_KEY,
       JSON.stringify({
@@ -102,6 +177,7 @@ const Checkout = () => {
         fullName: fullName.trim(),
         phone: phone.trim(),
         address: address.trim(),
+        pickupLocation: pickupLocation.trim(),
         notes: notes.trim(),
       }),
     );
@@ -171,7 +247,7 @@ const Checkout = () => {
           <form
             className="checkout-card details-card"
             onSubmit={handleProceedToPayment}>
-            <h2>Delivery Details</h2>
+            <h2>Order Details</h2>
 
             <div className="checkout-type-toggle">
               <button
@@ -221,7 +297,21 @@ const Checkout = () => {
                   required
                 />
               </label>
-            ) : null}
+            ) : (
+              <label>
+                Pickup Location
+                <select
+                  value={pickupLocation}
+                  onChange={(event) => setPickupLocation(event.target.value)}
+                  required>
+                  {pickupOptions.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            )}
 
             <label>
               Notes (optional)

@@ -194,7 +194,7 @@ const Orders = () => {
                 const deliveryText =
                   order.type === "delivery"
                     ? order.deliveryAddress || "Delivery address not saved"
-                    : "Pickup from the restaurant";
+                    : order.pickupLocation || "Pickup from the restaurant";
 
                 return (
                   <article className="active-order-card" key={order._id}>

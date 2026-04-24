@@ -4,8 +4,15 @@ const customerService = require("../services/CustomerService.js");
 
 exports.createOrder = async (req, res) => {
   try {
-    const { userId, items, totalAmount, type, deliveryAddress, notes } =
-      req.body;
+    const {
+      userId,
+      items,
+      totalAmount,
+      type,
+      deliveryAddress,
+      pickupLocation,
+      notes,
+    } = req.body;
 
     if (!userId || !items || !totalAmount || !type) {
       return res.status(400).json({ message: "Missing required fields" });
@@ -20,7 +27,9 @@ exports.createOrder = async (req, res) => {
       items,
       totalAmount,
       type,
-      deliveryAddress: type === "delivery" ? deliveryAddress : "",
+      deliveryAddress:
+        type === "delivery" ? (deliveryAddress || "").trim() : "",
+      pickupLocation: type === "pickup" ? (pickupLocation || "").trim() : "",
       notes,
     });
 

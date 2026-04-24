@@ -162,6 +162,18 @@ const Orders = () => {
                             ? "🛵 Delivery"
                             : "🏠 Pickup"}
                         </span>
+                        <div
+                          style={{
+                            marginTop: "6px",
+                            fontSize: "11px",
+                            color: "var(--text-secondary)",
+                            maxWidth: "220px",
+                            lineHeight: 1.35,
+                          }}>
+                          {order.type === "delivery"
+                            ? order.deliveryAddress || "No delivery address"
+                            : order.pickupLocation || "No pickup location"}
+                        </div>
                       </td>
                       <td>
                         <select

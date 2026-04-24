@@ -153,7 +153,7 @@
 
 .checkout-type-toggle button.active {
   background: linear-gradient(160deg, #e8a020, #d88f27);
-  color: #171717;
+  color: #171717 !important;
 }
 
 .details-card label {
@@ -164,8 +164,8 @@
 }
 
 .details-card input,
-.details-card textarea {
-  width: 100%;
+.details-card textarea,
+.details-card select {
   border-radius: 10px;
   border: 1px solid #3a3a3a;
   background: #131313;

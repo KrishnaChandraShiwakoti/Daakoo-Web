@@ -94,11 +94,15 @@ const ReadyForPickup = () => {
               <p className="staff-customer-name">{getCustomerName(order)}</p>
               <p className="staff-muted small">{getOrderItemsLabel(order)}</p>
 
-              {!isPickup ? (
+              {isPickup ? (
+                <p className="staff-muted small">
+                  Pickup: {order.pickupLocation || "Restaurant front desk"}
+                </p>
+              ) : (
                 <p className="staff-muted small">
                   Courier: {order.deliveryAddress || "Delivery dispatch"}
                 </p>
-              ) : null}
+              )}
 
               <div className="staff-ready-actions">
                 <button
