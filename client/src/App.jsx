@@ -64,6 +64,22 @@ const LoginRoute = () => {
   return <Navigate to={getDashboardPathByRole(role)} replace />;
 };
 
+const RequireAuthRoute = ({ children }) => {
+  const { isAuthenticated } = readStoredSession();
+
+  if (!isAuthenticated) {
+    return (
+      <Navigate
+        to="/login"
+        replace
+        state={{ message: "Please login to access this page." }}
+      />
+    );
+  }
+
+  return children;
+};
+
 function App() {
   const router = createBrowserRouter([
     {
@@ -81,15 +97,27 @@ function App() {
         },
         {
           path: "/orders",
-          element: <Orders />,
+          element: (
+            <RequireAuthRoute>
+              <Orders />
+            </RequireAuthRoute>
+          ),
         },
         {
           path: "/checkout",
-          element: <Checkout />,
+          element: (
+            <RequireAuthRoute>
+              <Checkout />
+            </RequireAuthRoute>
+          ),
         },
         {
           path: "/payment",
-          element: <Payment />,
+          element: (
+            <RequireAuthRoute>
+              <Payment />
+            </RequireAuthRoute>
+          ),
         },
         {
           path: "/about",
@@ -110,7 +138,11 @@ function App() {
         },
         {
           path: "/profile",
-          element: <Profile />,
+          element: (
+            <RequireAuthRoute>
+              <Profile />
+            </RequireAuthRoute>
+          ),
         },
       ],
     },

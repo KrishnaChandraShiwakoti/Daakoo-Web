@@ -190,11 +190,30 @@
 }
 
 @media (max-width: 900px) {
+  .hero .left {
+    width: 100%;
+  }
+  .hero .left .description {
+    width: 100%;
+  }
+  .right {
+    visibility: hidden;
+  }
+  .why-section {
+    padding: 30px 10px;
+  }
   .why-content {
     flex-direction: column;
   }
-
+  .why-text h2 {
+    font-size: 30px;
+    width: 100%;
+  }
+  .image-grid {
+    visibility: hidden;
+  }
   .why-container {
     padding: 40px;
+    width: 75%;
   }
 }
