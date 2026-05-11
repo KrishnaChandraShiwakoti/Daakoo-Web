@@ -26,6 +26,7 @@ const reviewRouter = require("./routes/reviewRoutes.js");
 const customerRouter = require("./routes/customerRoutes.js");
 const settingsRouter = require("./routes/settingsRoutes.js");
 const analyticsRouter = require("./routes/analyticsRoutes.js");
+const paymentRouter = require("./routes/paymentRoutes.js");
 
 // Middleware
 app.use(express.json());
@@ -42,6 +43,7 @@ app.use("/api/v1/reviews", reviewRouter);
 app.use("/api/v1/customers", customerRouter);
 app.use("/api/v1/settings", settingsRouter);
 app.use("/api/v1/analytics", analyticsRouter);
+app.use("/api/v1/payment", paymentRouter);
 
 //health check
 app.get("/", (req, res) => {

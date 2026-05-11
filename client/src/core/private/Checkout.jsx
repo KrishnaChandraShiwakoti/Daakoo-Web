@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { getSettings } from "../../API/Settings";
 import {
   readCartItems,
@@ -8,7 +8,7 @@ import {
 } from "../../utils/cart";
 import { readStoredSession } from "../../utils/authSession";
 import "../../styles/checkout.css";
-
+import { CheckoutAPI } from "../../API/Payment";
 const CHECKOUT_DRAFT_KEY = "daakooCheckoutDraft";
 
 const DEFAULT_PICKUP_LOCATIONS = [
@@ -67,7 +67,6 @@ const readCheckoutDraft = () => {
 };
 
 const Checkout = () => {
-  const navigate = useNavigate();
   const { user } = readStoredSession();
   const savedDraft = readCheckoutDraft();
   const defaultPickupLocation =
@@ -146,7 +145,7 @@ const Checkout = () => {
     refreshCart();
   };
 
-  const handleProceedToPayment = (event) => {
+  const handleProceedToPayment = async (event) => {
     event.preventDefault();
     setErrorMsg("");
 
@@ -182,7 +181,11 @@ const Checkout = () => {
       }),
     );
 
-    navigate("/payment");
+    console.log(cartItems);
+    const token = localStorage.getItem("daakooToken");
+    const result = await CheckoutAPI(cartItems, token);
+    console.log(result);
+    window.location.href = result.url;
   };
 
   if (cartItems.length === 0) {

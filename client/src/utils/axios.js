@@ -35,3 +35,7 @@ export const dashboard = axios.create({
 export const auth = axios.create({
   baseURL: `${BACKEND_URL}/api/v1/user`,
 });
+
+export const checkout = axios.create({
+  baseURL: `${BACKEND_URL}/api/v1/payment`,
+});

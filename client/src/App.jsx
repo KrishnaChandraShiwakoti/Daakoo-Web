@@ -9,13 +9,14 @@ import {
   LandingPage,
   Orders,
   Checkout,
-  Payment,
   Login,
   Menu,
   Profile,
   Register,
   About,
   Contact,
+  PaymentSuccess,
+  PaymentCancel,
 } from "./core";
 import AdminHomeLayout from "./admin/core/private/HomeLayout";
 
@@ -111,17 +112,27 @@ function App() {
             </RequireAuthRoute>
           ),
         },
+
         {
-          path: "/payment",
+          path: "/about",
+          element: <About />,
+        },
+
+        {
+          path: "/payment-success",
           element: (
             <RequireAuthRoute>
-              <Payment />
+              <PaymentSuccess />
             </RequireAuthRoute>
           ),
         },
         {
-          path: "/about",
-          element: <About />,
+          path: "/payment-cancel",
+          element: (
+            <RequireAuthRoute>
+              <PaymentCancel />
+            </RequireAuthRoute>
+          ),
         },
 
         {
