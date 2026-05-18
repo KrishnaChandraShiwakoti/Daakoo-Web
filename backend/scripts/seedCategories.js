@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const mongoConnect = require("../config/db");
 const Category = require("../models/category");
 
-require("dotenv").config({ path: ".env.dev" });
+require("dotenv").config({ path: ".env" });
 
 const categories = [
   "Starters",

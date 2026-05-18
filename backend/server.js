@@ -1,6 +1,6 @@
 const app = require("./app");
 const mongoConnect = require("./config/db");
-require("dotenv").config({ path: ".env.dev" });
+require("dotenv").config({ path: ".env" });
 const PORT = process.env.PORT || 3000;
 
 // Process-level error logging

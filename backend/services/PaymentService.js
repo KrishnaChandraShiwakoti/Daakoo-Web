@@ -1,5 +1,5 @@
 const Stripe = require("stripe");
-require("dotenv").config({ path: ".env.dev" });
+require("dotenv").config({ path: ".env" });
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 class PaymentService {
   async checkout(payload, userId) {
